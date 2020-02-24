@@ -20,5 +20,6 @@
 /*/.classpath
 
 /target/
+/data/
 
 *.bak
