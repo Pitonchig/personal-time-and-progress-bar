@@ -26,3 +26,18 @@ services:
         environment:
           - RABBITMQ_DEFAULT_USER=test
           - RABBITMQ_DEFAULT_PASS=test
+
+    ptpb_aerospike:
+        image: aerospike:latest
+        ports:
+          - 3000:3000
+          - 3001:3001
+          - 3002:3002
+          - 3003:3003
+        volumes:
+          - ../data/aerospike/etc:/opt/aerospike/etc
+          - ../data/aerospike/data:/opt/aerospike/data
+        command: [asd, --config-file, /opt/aerospike/etc/aerospike.conf]
+
+
+
