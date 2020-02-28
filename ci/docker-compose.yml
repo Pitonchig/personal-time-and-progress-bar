@@ -14,3 +14,15 @@ services:
           - /var/run/docker.sock:/var/run/docker.sock
           - ../data/jenkins:/var/jenkins_home
           - /usr/bin/docker:/usr/bin/docker
+
+    ptpb_rabbit:
+        image: rabbitmq:3-management
+        hostname: rabbit
+        ports:
+          - 5672:5672
+          - 15672:15672
+        volumes:
+          - ../data/rabbitmq:/var/lib/rabbitmq
+        environment:
+          - RABBITMQ_DEFAULT_USER=test
+          - RABBITMQ_DEFAULT_PASS=test
