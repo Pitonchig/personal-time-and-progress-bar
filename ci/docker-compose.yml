@@ -12,7 +12,7 @@ services:
         privileged: true
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
-          - ../data/jenkins:/var/jenkins_home
+          - ../../data/jenkins:/var/jenkins_home
           - /usr/bin/docker:/usr/bin/docker
 
     ptpb_rabbit:
@@ -22,10 +22,12 @@ services:
           - 5672:5672
           - 15672:15672
         volumes:
-          - ../data/rabbitmq:/var/lib/rabbitmq
+          - ../../data/rabbitmq:/var/lib/rabbitmq
         environment:
           - RABBITMQ_DEFAULT_USER=test
           - RABBITMQ_DEFAULT_PASS=test
+        networks:
+          - ptpb
 
     ptpb_aerospike:
         image: aerospike:latest
@@ -35,9 +37,20 @@ services:
           - 3002:3002
           - 3003:3003
         volumes:
-          - ../data/aerospike/etc:/opt/aerospike/etc
-          - ../data/aerospike/data:/opt/aerospike/data
+          - ../../data/aerospike/etc:/opt/aerospike/etc
+          - ../../data/aerospike/data:/opt/aerospike/data
         command: [asd, --config-file, /opt/aerospike/etc/aerospike.conf]
+        networks:
+          - ptpb
+          - amc
 
+    ptpb_aerospike_amc:
+         image: aerospike/amc:latest
+         ports:
+           - 8081:8081
+         networks:
+           - amc
 
-
+networks:
+  ptpb:
+  amc:
