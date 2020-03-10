@@ -1,0 +1,9 @@
+package net.thumbtack.ptpb.amqp;
+
+public class PtpbAmql
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello Amqp!" );
+    }
+}
