@@ -10,10 +10,12 @@ import net.thumbtack.ptpb.handler.projects.dto.responses.CreateTaskResponse;
 import net.thumbtack.ptpb.handler.projects.dto.responses.GetProjectResponse;
 import net.thumbtack.ptpb.handler.projects.dto.responses.GetTaskResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class ProjectsService {
 
     private ProjectDao projectDao;
@@ -23,14 +25,14 @@ public class ProjectsService {
         this.projectDao = projectDao;
     }
 
-    public List<? extends Response> getProjectsList(String cookie) {
+    public List<? extends Response> getProjects(String cookie) {
         //TODO: not implemented
         return new LinkedList<>();
     }
 
     public Response createProject(CreateProjectRequest request, String cookie) {
         //TODO: not implemented
-        return new CreateProjectResponse();
+        return new CreateProjectResponse(0);
     }
 
     public Response deleteProject(int id, String cookie) {
