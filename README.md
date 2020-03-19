@@ -2,7 +2,7 @@
 
 ---
 
-Ptpb is a trainee project that synchronize with todoist.com and show what tasks status is.
+Personal time and progress bar is a trainee project that synchronize with todoist.com and show what tasks status is.
 
 # Environment
 Ptpb uses Java 11 + Maven 3.0.
@@ -40,9 +40,5 @@ Verify the deployment by navigating to your server address in your preferred bro
 ```sh
 127.0.0.1:8000
 ```
-
-# License
-
-It is a Free Software
 
 ----
