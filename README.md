@@ -18,6 +18,9 @@ $ cd ./ci
 $ docker-compose up
 ```
 
+The components structure is described in the diagram: [components diagram](https://docs.google.com/drawings/d/1JHPsG3Z8cL-KdWP3kaqRyCCQeZLN8T1-wlnb3tJdT5o/edit?usp=sharing)
+
+
 # Building from sources
 For production release run following commands:
 
