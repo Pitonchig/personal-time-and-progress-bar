@@ -1,11 +1,3 @@
-logging:
-  level:
-    sql: info
-    net.thumbtack: DEBUG
-    org.springframework: INFO
-    org.hibernate: DEBUG
-    com.aerospike: DEBUG
-
 spring:
   main:
     banner-mode: off
