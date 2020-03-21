@@ -3,6 +3,7 @@ package net.thumbtack.ptpb.db;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.policy.ClientPolicy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,10 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAerospikeRepositories(basePackages = {"net.thumbtack.ptpb.db"})
 @EnableAutoConfiguration
 @EnableTransactionManagement
+@RequiredArgsConstructor
 public class DbConfiguration {
 
-    @Autowired
-    DbProperties dbProperties;
+    private final DbProperties dbProperties;
 
     @Bean(destroyMethod = "close")
     public AerospikeClient aerospikeClient() {

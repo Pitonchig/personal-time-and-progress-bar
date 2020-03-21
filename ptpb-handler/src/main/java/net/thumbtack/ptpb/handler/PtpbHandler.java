@@ -15,7 +15,7 @@ public class PtpbHandler {
 
     public static void main(String[] args) {
         log.info("Personal time and progress bar handler started.");
-	    SpringApplication.run(PtpbHandler.class, args);
+        SpringApplication.run(PtpbHandler.class, args);
     }
 
 }

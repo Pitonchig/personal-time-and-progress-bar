@@ -1,25 +1,21 @@
 package net.thumbtack.ptpb.handler.users;
 
+import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
 import net.thumbtack.ptpb.handler.users.dto.requests.DeleteUserRequest;
 import net.thumbtack.ptpb.handler.users.dto.requests.RegisterUserRequest;
 import net.thumbtack.ptpb.handler.users.dto.responses.RegisterUserResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UsersService {
 
-    private UserDao userDao;
-
-    @Autowired
-    public UsersService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private final UserDao userDao;
 
     public List<User> getAllUsers() {
         return userDao.getAllUsers();

@@ -1,20 +1,16 @@
 package net.thumbtack.ptpb.db.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    private UserMapper userMapper;
-
-    @Autowired
-    public UserDaoImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+    private final UserMapper userMapper;
 
     @Override
     public List<User> getAllUsers() {

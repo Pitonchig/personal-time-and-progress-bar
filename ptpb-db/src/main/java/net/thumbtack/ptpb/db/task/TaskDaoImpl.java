@@ -1,20 +1,16 @@
 package net.thumbtack.ptpb.db.task;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class TaskDaoImpl implements TaskDao {
 
-    private TaskMapper taskMapper;
-
-    @Autowired
-    public TaskDaoImpl(TaskMapper taskMapper) {
-        this.taskMapper = taskMapper;
-    }
+    private final TaskMapper taskMapper;
 
     @Override
     public List<Task> getAllTasks() {

@@ -1,14 +1,10 @@
 package net.thumbtack.ptpb.db.project;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class ProjectDaoImpl implements ProjectDao {
-    private ProjectMapper projectMapper;
-
-    @Autowired
-    public ProjectDaoImpl(ProjectMapper projectMapper) {
-        this.projectMapper = projectMapper;
-    }
+    private final ProjectMapper projectMapper;
 }

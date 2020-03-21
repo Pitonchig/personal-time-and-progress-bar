@@ -1,6 +1,7 @@
 package net.thumbtack.ptpb.handler.projects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
 import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.common.Types;
@@ -35,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {ProjectsController.class})
+//@RequiredArgsConstructor
 public class ProjectsControllerTest {
 
     @MockBean

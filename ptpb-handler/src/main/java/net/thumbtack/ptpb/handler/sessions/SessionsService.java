@@ -1,22 +1,18 @@
 package net.thumbtack.ptpb.handler.sessions;
 
+import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.session.SessionDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
 import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.sessions.dto.requests.LoginUserRequest;
 import net.thumbtack.ptpb.handler.sessions.dto.responses.LoginUserResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class SessionsService {
 
-    private SessionDao sessionDao;
-
-    @Autowired
-    public SessionsService(SessionDao sessionDao) {
-        this.sessionDao = sessionDao;
-    }
+    private final SessionDao sessionDao;
 
     public Response loginUser(LoginUserRequest request) {
         //TODO: not implemented
