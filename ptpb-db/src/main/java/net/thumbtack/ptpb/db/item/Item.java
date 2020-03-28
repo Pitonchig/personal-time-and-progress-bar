@@ -1,4 +1,4 @@
-package net.thumbtack.ptpb.db.project;
+package net.thumbtack.ptpb.db.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,17 +7,20 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Project {
+public class Item {
     @Id
     private long id;
+    private long projectId;
     private String userName;
-    private String projectName;
-    private int color;
-    private boolean isFavorited;
+    private String content;
+    private int priority;
+    private LocalDateTime due;
+    private boolean isCompleted;
 }

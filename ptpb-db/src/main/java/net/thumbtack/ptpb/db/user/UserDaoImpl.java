@@ -5,12 +5,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
     private final UserMapper userMapper;
+
+    @Override
+    public Optional<User> getUserByName(String name) {
+        return userMapper.findById(name);
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -20,12 +26,22 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void insert(User user) {
+    public void insertUser(User user) {
         userMapper.save(user);
     }
 
     @Override
-    public void deleteUser(int userId) {
-        userMapper.deleteById(userId);
+    public void deleteUser(String userName) {
+        userMapper.deleteById(userName);
+    }
+
+    @Override
+    public boolean isRegistered(String userName) {
+        return userMapper.existsById(userName);
+    }
+
+    @Override
+    public void deleteAllUsers() {
+        userMapper.deleteAll();
     }
 }
