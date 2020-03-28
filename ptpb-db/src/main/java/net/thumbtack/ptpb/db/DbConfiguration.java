@@ -1,38 +1,32 @@
 package net.thumbtack.ptpb.db;
 
-
-import com.aerospike.client.AerospikeClient;
-import com.aerospike.client.policy.ClientPolicy;
+import com.aerospike.client.Host;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.aerospike.core.AerospikeTemplate;
+import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
 import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
+import java.util.Collection;
+import java.util.Collections;
+
 @Configuration
-@EnableAerospikeRepositories(basePackages = {"net.thumbtack.ptpb.db"})
 @EnableAutoConfiguration
-@EnableTransactionManagement
 @RequiredArgsConstructor
-public class DbConfiguration {
+@EnableTransactionManagement
+@EnableAerospikeRepositories(basePackages = {"net.thumbtack.ptpb.db"})
+public class DbConfiguration extends AbstractAerospikeDataConfiguration {
 
     private final DbProperties dbProperties;
 
-    @Bean(destroyMethod = "close")
-    public AerospikeClient aerospikeClient() {
-        ClientPolicy policy = new ClientPolicy();
-        policy.failIfNotConnected = true;
-        return new AerospikeClient(policy, dbProperties.getHost(), dbProperties.getPort());
+    @Override
+    protected Collection<Host> getHosts() {
+        return Collections.singleton(new Host(dbProperties.getHost(), dbProperties.getPort()));
     }
 
-    @Bean
-    public AerospikeTemplate aerospikeTemplate() {
-        return new AerospikeTemplate(aerospikeClient(), dbProperties.getName());
+    @Override
+    protected String nameSpace() {
+        return dbProperties.getNamespace();
     }
-
 }

@@ -3,11 +3,8 @@ spring:
     banner-mode: off
   jpa:
     show-sql: true
-  flyway:
-    enabled=true:
-
 
 db:
-  name: ptpb
+  namespace: ptpb
   port: 3000
   host: localhost

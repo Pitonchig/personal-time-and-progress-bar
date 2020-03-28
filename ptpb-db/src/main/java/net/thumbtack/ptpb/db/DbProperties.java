@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class DbProperties {
     private String host;
-    private String name;
+    private String namespace;
     private int port;
 }
