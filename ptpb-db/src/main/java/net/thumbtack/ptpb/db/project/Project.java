@@ -16,8 +16,8 @@ import javax.persistence.Entity;
 public class Project {
     @Id
     private long id;
-    private String userName;
+    private long userId;
     private String projectName;
     private int color;
-    private boolean isFavorited;
+    private boolean isFavorite;
 }

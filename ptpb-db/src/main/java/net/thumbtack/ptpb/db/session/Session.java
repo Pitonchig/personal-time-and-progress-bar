@@ -19,5 +19,6 @@ public class Session implements Serializable {
     @Id
     private String uuid;
     private LocalDateTime dateTime;
-    private String userName;
+    private long userId;
+    private boolean isExpired;
 }

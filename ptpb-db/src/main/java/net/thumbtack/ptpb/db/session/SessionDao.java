@@ -14,4 +14,6 @@ public interface SessionDao {
     List<Session> getAllSessions();
 
     void deleteAllSessions();
+
+    void update(Session session);
 }

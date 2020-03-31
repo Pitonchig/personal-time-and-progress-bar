@@ -11,4 +11,8 @@ public interface ItemDao {
     void insertItem(Item item);
 
     void deleteAllItems();
+
+    List<Item> getItemsByProjectId(long id);
+
+    void deleteItemById(long itemId);
 }

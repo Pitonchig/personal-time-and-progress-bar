@@ -34,4 +34,16 @@ public class ItemDaoImpl implements ItemDao {
     public void deleteAllItems() {
         itemMapper.deleteAll();
     }
+
+    @Override
+    public List<Item> getItemsByProjectId(long id) {
+        List<Item> items = new LinkedList<>();
+        itemMapper.findByProjectId(id).forEach(items::add);
+        return items;
+    }
+
+    @Override
+    public void deleteItemById(long itemId) {
+        itemMapper.deleteById(itemId);
+    }
 }

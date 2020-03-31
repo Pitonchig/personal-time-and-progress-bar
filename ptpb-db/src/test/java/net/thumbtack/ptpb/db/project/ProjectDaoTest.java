@@ -1,10 +1,8 @@
 package net.thumbtack.ptpb.db.project;
 
-
 import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.DbConfiguration;
 import net.thumbtack.ptpb.db.DbProperties;
-import net.thumbtack.ptpb.db.item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -40,11 +37,12 @@ public class ProjectDaoTest {
     @Test
     void testInsertAndGetProjectById() {
         long projectId = System.nanoTime();
+        long userId = System.nanoTime();
         Project project = Project.builder()
                 .id(projectId)
                 .projectName("project name")
-                .userName("user")
-                .isFavorited(false)
+                .userId(userId)
+                .isFavorite(false)
                 .color(39)
                 .build();
         projectDao.insertProject(project);
@@ -59,11 +57,12 @@ public class ProjectDaoTest {
         List<Project> projects = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             long projectId = System.nanoTime();
+            long userId = System.nanoTime();
             Project project = Project.builder()
                     .id(projectId)
                     .projectName("project name")
-                    .userName("user")
-                    .isFavorited(false)
+                    .userId(userId)
+                    .isFavorite(false)
                     .color(39)
                     .build();
             projects.add(project);
@@ -73,8 +72,8 @@ public class ProjectDaoTest {
         Project notInsertedProject = Project.builder()
                 .id(System.nanoTime())
                 .projectName("not inserted project name")
-                .userName("user")
-                .isFavorited(false)
+                .userId(System.nanoTime())
+                .isFavorite(false)
                 .color(39)
                 .build();
 
@@ -93,11 +92,12 @@ public class ProjectDaoTest {
 
         for (int i = 0; i < count; i++) {
             long projectId = System.nanoTime();
+            long userId = System.nanoTime();
             Project project = Project.builder()
                     .id(projectId)
                     .projectName(String.format("not inserted project name %d", i))
-                    .userName("user")
-                    .isFavorited(false)
+                    .userId(userId)
+                    .isFavorite(false)
                     .color(39)
                     .build();
             projectDao.insertProject(project);

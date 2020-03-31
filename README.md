@@ -36,6 +36,11 @@ Once building from sources is done and environment is running then start the app
 $ java -jar ptpb-handler-1.0-SNAPSHOT.jar
 ```
 
+For define configuration and log path use following params:
+```sh
+--spring.config.location=./config/ --logging.config=./config/logback.xml
+```
+
 Verify the deployment by navigating to your server address in your preferred browser:
 ```sh
 127.0.0.1:8000

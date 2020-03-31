@@ -1,7 +1,6 @@
 package net.thumbtack.ptpb.db.session;
 
 import lombok.RequiredArgsConstructor;
-import net.thumbtack.ptpb.db.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -38,5 +37,10 @@ public class SessionDaoImpl implements SessionDao {
     @Override
     public void deleteAllSessions() {
         sessionMapper.deleteAll();
+    }
+
+    @Override
+    public void update(Session session) {
+        sessionMapper.save(session);
     }
 }

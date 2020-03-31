@@ -11,4 +11,8 @@ public interface ProjectDao {
     void insertProject(Project project);
 
     void deleteAllProjects();
+
+    List<Project> getProjectsByUserId(long userId);
+
+    void deleteProjectById(long projectId);
 }

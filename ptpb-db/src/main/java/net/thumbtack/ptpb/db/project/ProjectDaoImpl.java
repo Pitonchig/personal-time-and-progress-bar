@@ -33,4 +33,16 @@ public class ProjectDaoImpl implements ProjectDao {
     public void deleteAllProjects() {
         projectMapper.deleteAll();
     }
+
+    @Override
+    public List<Project> getProjectsByUserId(long userId) {
+        List<Project> projects = new LinkedList<>();
+        projectMapper.findByUserId(userId).forEach(projects::add);
+        return projects;
+    }
+
+    @Override
+    public void deleteProjectById(long projectId) {
+        projectMapper.deleteById(projectId);
+    }
 }

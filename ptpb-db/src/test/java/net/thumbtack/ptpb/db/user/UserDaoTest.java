@@ -3,7 +3,6 @@ package net.thumbtack.ptpb.db.user;
 import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.DbConfiguration;
 import net.thumbtack.ptpb.db.DbProperties;
-import net.thumbtack.ptpb.db.session.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class UserDaoTest {
 
         Optional<User> result = userDao.getUserByName(userName);
         assertTrue(result.isPresent());
-        assertEquals(user, result.get());
+        assertEquals(result.get(), user);
     }
 
     @Test
@@ -59,6 +58,7 @@ public class UserDaoTest {
         List<User> users = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             User user = User.builder()
+                    .id(System.nanoTime())
                     .name(String.format("User-%d", i))
                     .password(String.format("password-%d", i))
                     .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -69,6 +69,7 @@ public class UserDaoTest {
         users.forEach(userDao::insertUser);
 
         User notInsertedUser = User.builder()
+                .id(System.nanoTime())
                 .name("NotInsertedUser")
                 .password("password")
                 .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -99,7 +100,9 @@ public class UserDaoTest {
 
     @Test
     void testDeleteUser() {
+        long id = System.nanoTime();
         User user = User.builder()
+                .id(id)
                 .name("User")
                 .password("password")
                 .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -108,7 +111,7 @@ public class UserDaoTest {
         userDao.insertUser(user);
         assertTrue(userDao.isRegistered(user.getName()));
 
-        userDao.deleteUser(user.getName());
+        userDao.deleteUser(id);
         assertFalse(userDao.isRegistered(user.getName()));
     }
 
@@ -119,6 +122,7 @@ public class UserDaoTest {
 
         for (int i = 0; i < count; i++) {
             User user = User.builder()
+                    .id(System.nanoTime())
                     .name(String.format("User-%d", i))
                     .password("password")
                     .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))

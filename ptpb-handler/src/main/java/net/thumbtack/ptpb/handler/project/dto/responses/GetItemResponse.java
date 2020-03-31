@@ -1,21 +1,18 @@
-package net.thumbtack.ptpb.db.item;
+package net.thumbtack.ptpb.handler.project.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import net.thumbtack.ptpb.handler.common.Response;
 
-import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Item {
-    @Id
+@AllArgsConstructor
+public class GetItemResponse implements Response {
     private long id;
     private long projectId;
     private long userId;

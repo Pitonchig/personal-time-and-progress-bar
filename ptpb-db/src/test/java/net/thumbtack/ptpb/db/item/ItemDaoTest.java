@@ -1,6 +1,5 @@
 package net.thumbtack.ptpb.db.item;
 
-
 import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.DbConfiguration;
 import net.thumbtack.ptpb.db.DbProperties;
@@ -41,11 +40,12 @@ public class ItemDaoTest {
     void testInsertAndGetItemById() {
         long itemId = System.nanoTime();
         long projectId = System.nanoTime();
+        long userId = System.nanoTime();
 
         Item item = Item.builder()
                 .id(itemId)
                 .projectId(projectId)
-                .userName("user")
+                .userId(userId)
                 .content("test item")
                 .due(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
                 .isCompleted(false)
@@ -64,10 +64,11 @@ public class ItemDaoTest {
         for (int i = 0; i < 10; i++) {
             long itemId = System.nanoTime();
             long projectId = System.nanoTime();
+            long userId = System.nanoTime();
             Item item = Item.builder()
                     .id(itemId)
                     .projectId(projectId)
-                    .userName("user")
+                    .userId(userId)
                     .content(String.format("test item %d", i))
                     .due(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
                     .isCompleted(false)
@@ -81,7 +82,7 @@ public class ItemDaoTest {
         Item notInsertedItem = Item.builder()
                 .id(System.nanoTime())
                 .projectId(System.nanoTime())
-                .userName("user")
+                .userId(System.nanoTime())
                 .content("not inserted test item")
                 .due(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
                 .isCompleted(false)
@@ -104,10 +105,11 @@ public class ItemDaoTest {
         for (int i = 0; i < count; i++) {
             long itemId = System.nanoTime();
             long projectId = System.nanoTime();
+            long userId = System.nanoTime();
             Item item = Item.builder()
                     .id(itemId)
                     .projectId(projectId)
-                    .userName("user")
+                    .userId(userId)
                     .content(String.format("test item", i))
                     .due(LocalDateTime.now().plusDays(1))
                     .isCompleted(false)
@@ -119,5 +121,50 @@ public class ItemDaoTest {
         itemDao.deleteAllItems();
         assertEquals(0, itemDao.getAllItems().size());
     }
+
+
+    @Test
+    void testGetItemsByProjectId() {
+        List<Item> project1Items = new LinkedList<>();
+        long project1Id = System.nanoTime();
+        for (int i = 0; i < 10; i++) {
+            long itemId = System.nanoTime();
+            long userId = System.nanoTime();
+            Item item = Item.builder()
+                    .id(itemId)
+                    .projectId(project1Id)
+                    .userId(userId)
+                    .content(String.format("test item %d", i))
+                    .due(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
+                    .isCompleted(false)
+                    .priority(1)
+                    .build();
+            project1Items.add(item);
+        }
+        project1Items.forEach(itemDao::insertItem);
+
+        List<Item> project2Items = new LinkedList<>();
+        long project2Id = System.nanoTime();
+        for (int i = 0; i < 7; i++) {
+            long itemId = System.nanoTime();
+            long userId = System.nanoTime();
+            Item item = Item.builder()
+                    .id(itemId)
+                    .projectId(project2Id)
+                    .userId(userId)
+                    .content(String.format("test item %d", i))
+                    .due(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
+                    .isCompleted(false)
+                    .priority(1)
+                    .build();
+            project2Items.add(item);
+        }
+        project2Items.forEach(itemDao::insertItem);
+
+        List<Item> items = itemDao.getItemsByProjectId(project1Id);
+        assertEquals(project1Items.size(), items.size());
+        items.containsAll(project1Items);
+    }
+
 
 }

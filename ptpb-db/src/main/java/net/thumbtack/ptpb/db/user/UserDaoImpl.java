@@ -1,6 +1,7 @@
 package net.thumbtack.ptpb.db.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -14,8 +15,17 @@ public class UserDaoImpl implements UserDao {
     private final UserMapper userMapper;
 
     @Override
+    public Optional<User> getUserById(long id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
     public Optional<User> getUserByName(String name) {
-        return userMapper.findById(name);
+        List<User> users = userMapper.findByName(name);
+        if (users.size() > 1) {
+            throw new DuplicateKeyException(String.format("More than one user with name: %s", name));
+        }
+        return users.isEmpty() ? Optional.empty() : Optional.ofNullable(users.get(0));
     }
 
     @Override
@@ -31,13 +41,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(String userName) {
-        userMapper.deleteById(userName);
+    public void deleteUser(long id) {
+        userMapper.deleteById(id);
     }
 
     @Override
     public boolean isRegistered(String userName) {
-        return userMapper.existsById(userName);
+        return userMapper.findByName(userName).size() > 0;
     }
 
     @Override
