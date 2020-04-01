@@ -1,6 +1,0 @@
-package net.thumbtack.ptpb.amqp;
-
-public class PtpbAmqp
-{
-
-}

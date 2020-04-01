@@ -23,7 +23,7 @@
     </properties>
 
     <modules>
-        <module>ptpb-amqp</module>
+        <module>ptpb-rabbitmq</module>
         <module>ptpb-db</module>
         <module>ptpb-handler</module>
     </modules>

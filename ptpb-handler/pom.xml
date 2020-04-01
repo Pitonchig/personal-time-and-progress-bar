@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>net.thumbtack</groupId>
-            <artifactId>ptpb-amqp</artifactId>
+            <artifactId>ptpb-rabbitmq</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

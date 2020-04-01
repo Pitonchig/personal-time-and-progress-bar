@@ -1,0 +1,6 @@
+package net.thumbtack.ptpb.rabbitmq;
+
+public class PtpbRabbitMq
+{
+
+}

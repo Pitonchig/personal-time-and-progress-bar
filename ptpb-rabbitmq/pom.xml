@@ -8,9 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ptpb-amqp</artifactId>
+    <artifactId>ptpb-rabbitmq</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ptpb-amqp</name>
+    <name>ptpb-rabbitmq</name>
     <packaging>jar</packaging>
     <url>http://ptpb.thumbtack.net</url>
 
