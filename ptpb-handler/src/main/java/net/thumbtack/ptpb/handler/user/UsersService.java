@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.handler.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.session.SessionDao;
 import net.thumbtack.ptpb.db.user.User;
@@ -9,6 +10,9 @@ import net.thumbtack.ptpb.handler.common.PtpbException;
 import net.thumbtack.ptpb.handler.user.dto.requests.DeleteUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.requests.RegisterUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.responses.RegisterUserResponse;
+import net.thumbtack.ptpb.rabbitmq.user.RabbitMqUserService;
+import net.thumbtack.ptpb.rabbitmq.user.SyncUserAmqpRequest;
+import net.thumbtack.ptpb.rabbitmq.user.SyncUserAmqpResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +25,8 @@ import static net.thumbtack.ptpb.handler.common.ErrorCode.*;
 @Service
 @RequiredArgsConstructor
 public class UsersService {
+
+    private final RabbitMqUserService rabbitMqUserService;
     private final UserDao userDao;
     private final SessionDao sessionDao;
 
@@ -28,11 +34,14 @@ public class UsersService {
         return userDao.getAllUsers();
     }
 
-    public RegisterUserResponse registerUser(RegisterUserRequest request) throws PtpbException {
+    public RegisterUserResponse registerUser(RegisterUserRequest request) throws PtpbException, JsonProcessingException {
         checkIsUserNameFree(request.getLogin());
 
+        SyncUserAmqpRequest syncUserAmqpRequest = new SyncUserAmqpRequest(request.getToken());
+        SyncUserAmqpResponse response = rabbitMqUserService.syncUser(syncUserAmqpRequest);
+
         User user = User.builder()
-                .id(System.nanoTime())
+                .id(response.getId())
                 .name(request.getLogin())
                 .password(request.getPassword())
                 .token(request.getToken())

@@ -19,9 +19,8 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorResponse unknownErrorHandler(Exception ex) {
-        log.error("Unknown error: ex={}", ex);
+        log.error("Unknown error: ", ex);
         return ErrorResponse.builder()
-                .error(PtpbError.builder().message("DEBUG: internal server unknown error").build())        //FIXME: debug message
                 .error(PtpbError.builder().message(ex.getMessage()).build())
                 .build();
     }

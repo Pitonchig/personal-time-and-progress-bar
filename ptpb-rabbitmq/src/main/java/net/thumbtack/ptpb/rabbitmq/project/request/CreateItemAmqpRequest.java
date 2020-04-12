@@ -1,10 +1,9 @@
-package net.thumbtack.ptpb.handler.project.dto;
+package net.thumbtack.ptpb.rabbitmq.project.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.thumbtack.ptpb.handler.common.Response;
 
 import java.time.LocalDateTime;
 
@@ -12,12 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDto implements Response {
-    private long id;
-    private long projectId;
+public class CreateItemAmqpRequest {
     private long userId;
+    private long projectId;
     private String content;
     private int priority;
     private LocalDateTime due;
-    private boolean isCompleted;
 }

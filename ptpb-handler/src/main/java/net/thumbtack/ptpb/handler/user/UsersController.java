@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.handler.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
@@ -27,7 +28,7 @@ public class UsersController {
     private final UsersService usersService;
 
     @PostMapping
-    public Response registerUser(@RequestBody @Valid RegisterUserRequest request) throws PtpbException {
+    public Response registerUser(@RequestBody @Valid RegisterUserRequest request) throws PtpbException, JsonProcessingException {
         log.info("[POST] register user: request={}", request);
         return usersService.registerUser(request);
     }

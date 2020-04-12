@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.handler.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.thumbtack.ptpb.db.session.SessionDao;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
@@ -7,6 +8,9 @@ import net.thumbtack.ptpb.handler.common.PtpbException;
 import net.thumbtack.ptpb.handler.user.dto.requests.DeleteUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.requests.RegisterUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.responses.RegisterUserResponse;
+import net.thumbtack.ptpb.rabbitmq.user.RabbitMqUserService;
+import net.thumbtack.ptpb.rabbitmq.user.SyncUserAmqpRequest;
+import net.thumbtack.ptpb.rabbitmq.user.SyncUserAmqpResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,29 +34,39 @@ public class UsersServiceTest {
     private UserDao userDao;
     @MockBean
     private SessionDao sessionDao;
+    @MockBean
+    private RabbitMqUserService rabbitMqUserService;
 
     @BeforeEach
     void setup() {
-        usersService = new UsersService(userDao, sessionDao);
+        usersService = new UsersService(rabbitMqUserService, userDao, sessionDao);
     }
 
     @Test
-    void testRegisterUser() throws PtpbException {
+    void testRegisterUser() throws PtpbException, JsonProcessingException {
         RegisterUserRequest request = RegisterUserRequest.builder()
                 .login("login")
                 .password("password")
                 .token(UUID.randomUUID().toString())
                 .build();
         when(userDao.isRegistered(request.getLogin())).thenReturn(false);
+        SyncUserAmqpResponse amqpResponse = SyncUserAmqpResponse.builder()
+                .id(System.nanoTime())
+                .name(request.getLogin())
+                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
+        when(rabbitMqUserService.syncUser(any(SyncUserAmqpRequest.class))).thenReturn(amqpResponse);
+
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
 
         RegisterUserResponse response = usersService.registerUser(request);
+
 
         verify(userDao, times(1)).insertUser(userArgumentCaptor.capture());
         User user = userArgumentCaptor.getValue();
         assertNotNull(user);
 
-        assertEquals(response.getId(), user.getId());
+
         assertEquals(request.getLogin(), user.getName());
         assertEquals(request.getPassword(), user.getPassword());
         assertEquals(request.getToken(), user.getToken());
@@ -73,6 +87,8 @@ public class UsersServiceTest {
             fail();
         } catch (PtpbException ex) {
             assertTrue(ex.getErrors().contains(USER_NAME_ALREADY_EXIST));
+        } catch (JsonProcessingException e) {
+            fail();
         }
 
         verify(userDao, times(0)).insertUser(any(User.class));

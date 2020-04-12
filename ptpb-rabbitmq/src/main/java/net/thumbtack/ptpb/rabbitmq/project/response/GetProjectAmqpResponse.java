@@ -1,7 +1,6 @@
-package net.thumbtack.ptpb.handler.project.dto.responses;
+package net.thumbtack.ptpb.rabbitmq.project.response;
 
 import lombok.*;
-import net.thumbtack.ptpb.handler.common.Response;
 
 import java.util.List;
 
@@ -9,11 +8,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetProjectResponse implements Response {
+public class GetProjectAmqpResponse {
     private long id;
     private String name;
     @Singular
-    List<GetItemResponse> items;
+    List<GetItemAmqpResponse> items;
     private int color;
     private boolean isFavorite;
 }
