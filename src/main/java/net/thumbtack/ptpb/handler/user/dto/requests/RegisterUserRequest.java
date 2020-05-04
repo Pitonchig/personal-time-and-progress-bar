@@ -18,5 +18,5 @@ public class RegisterUserRequest implements Request {
     @NotEmpty
     private String password;
     @NotEmpty
-    private String token;
+    private String email;
 }

@@ -43,7 +43,7 @@ public class UserDaoTest {
         User user = User.builder()
                 .name(userName)
                 .password("password")
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);
@@ -61,7 +61,7 @@ public class UserDaoTest {
                     .id(System.nanoTime())
                     .name(String.format("User-%d", i))
                     .password(String.format("password-%d", i))
-                    .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .token(UUID.randomUUID().toString())
                     .build();
             users.add(user);
@@ -72,7 +72,7 @@ public class UserDaoTest {
                 .id(System.nanoTime())
                 .name("NotInsertedUser")
                 .password("password")
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .token(UUID.randomUUID().toString())
                 .build();
         List<User> results = userDao.getAllUsers();
@@ -89,7 +89,7 @@ public class UserDaoTest {
         User user = User.builder()
                 .name("User")
                 .password("password")
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .token(UUID.randomUUID().toString())
                 .build();
 
@@ -105,7 +105,7 @@ public class UserDaoTest {
                 .id(id)
                 .name("User")
                 .password("password")
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);
@@ -125,7 +125,7 @@ public class UserDaoTest {
                     .id(System.nanoTime())
                     .name(String.format("User-%d", i))
                     .password("password")
-                    .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .token(UUID.randomUUID().toString())
                     .build();
             userDao.insertUser(user);

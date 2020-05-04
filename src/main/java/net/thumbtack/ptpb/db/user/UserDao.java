@@ -22,7 +22,16 @@ public class UserDao {
     public Optional<User> getUserByName(String name) throws PtpbException {
         List<User> users = userMapper.findByName(name);
         if (users.size() > 1) {
-            throw new PtpbException(ErrorCode.WRAPPER_TIMEOUT);
+            throw new PtpbException(ErrorCode.UNKNOWN_ERROR);
+        }
+        return users.isEmpty() ? Optional.empty() : Optional.ofNullable(users.get(0));
+    }
+
+
+    public Optional<User> getUserByNameAndPassword(String name, String password) throws PtpbException {
+        List<User> users = userMapper.findByNameAndPassword(name, password);
+        if (users.size() > 1) {
+            throw new PtpbException(ErrorCode.UNKNOWN_ERROR);
         }
         return users.isEmpty() ? Optional.empty() : Optional.ofNullable(users.get(0));
     }

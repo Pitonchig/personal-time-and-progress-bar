@@ -44,10 +44,11 @@ public class UsersServiceTest {
 
     @Test
     void testRegisterUser() throws PtpbException, JsonProcessingException {
+        String uuid = UUID.randomUUID().toString();
         RegisterUserRequest request = RegisterUserRequest.builder()
                 .login("login")
                 .password("password")
-                .token(UUID.randomUUID().toString())
+                .email("email@gmail.com")
                 .build();
         when(userDao.isRegistered(request.getLogin())).thenReturn(false);
         SyncUserAmqpResponse amqpResponse = SyncUserAmqpResponse.builder()
@@ -59,7 +60,7 @@ public class UsersServiceTest {
 
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
 
-        RegisterUserResponse response = usersService.registerUser(request);
+        RegisterUserResponse response = usersService.registerUser(request, uuid);
 
 
         verify(userDao, times(1)).insertUser(userArgumentCaptor.capture());
@@ -69,21 +70,22 @@ public class UsersServiceTest {
 
         assertEquals(request.getLogin(), user.getName());
         assertEquals(request.getPassword(), user.getPassword());
-        assertEquals(request.getToken(), user.getToken());
-        assertNotNull(user.getRegistered());
+        assertEquals(request.getEmail(), user.getEmail());
+        assertNotNull(user.getRegistration());
     }
 
     @Test
     void testRegisterUserByAlreadyRegisteredName() {
+        String uuid = UUID.randomUUID().toString();
         RegisterUserRequest request = RegisterUserRequest.builder()
                 .login("login")
                 .password("password")
-                .token(UUID.randomUUID().toString())
+                .email("email@gmail.com")
                 .build();
         when(userDao.isRegistered(request.getLogin())).thenReturn(true);
 
         try {
-            usersService.registerUser(request);
+            usersService.registerUser(request, uuid);
             fail();
         } catch (PtpbException ex) {
             assertTrue(ex.getErrors().contains(USER_NAME_ALREADY_EXIST));
@@ -107,7 +109,7 @@ public class UsersServiceTest {
                 .name(request.getLogin())
                 .password(request.getPassword())
                 .token(UUID.randomUUID().toString())
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));
         when(sessionDao.isOnline(uuid)).thenReturn(true);
@@ -150,7 +152,7 @@ public class UsersServiceTest {
                 .name("wrong login")
                 .password("wrong password")
                 .token(UUID.randomUUID().toString())
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));
         when(sessionDao.isOnline(uuid)).thenReturn(true);

@@ -24,8 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
 @AutoConfigureMockMvc
@@ -47,28 +46,30 @@ public class UsersControllerTest {
     void testRegisterUser() throws Exception {
         String url = "/api/users";
         String name = "user";
+        String uuid = UUID.randomUUID().toString();
         RegisterUserRequest request = RegisterUserRequest.builder()
                 .login(name)
                 .password("password")
-                .token(UUID.randomUUID().toString())
+                .email("email@gmail.com")
                 .build();
 
         RegisterUserResponse response = RegisterUserResponse.builder()
                 .id(System.nanoTime())
                 .build();
-        when(usersService.registerUser(request)).thenReturn(response);
+        when(usersService.registerUser(request, uuid)).thenReturn(response);
 
         MvcResult result = mockMvc.perform(post(url)
                 .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(cookie().exists(Types.UUID))
+                //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         RegisterUserResponse resultResponse = objectMapper.readValue(result.getResponse().getContentAsString(), RegisterUserResponse.class);
         assertNotNull(resultResponse);
-        verify(usersService, times(1)).registerUser(request);
+        verify(usersService, times(1)).registerUser(request, uuid);
         assertEquals(response, resultResponse);
     }
 

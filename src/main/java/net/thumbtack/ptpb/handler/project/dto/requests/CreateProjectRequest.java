@@ -14,6 +14,4 @@ import javax.validation.constraints.NotEmpty;
 public class CreateProjectRequest {
     @NotEmpty
     private String name;
-    private int color;
-    private boolean isFavorite;
 }

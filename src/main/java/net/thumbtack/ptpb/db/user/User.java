@@ -20,8 +20,11 @@ public class User implements Serializable {
     private long id;
     private String name;
     private String password;
+    private String email;
+    private LocalDateTime registration;
+
+    private long todoistId;
     private String token;
-    private LocalDateTime registered;
 }
 
 

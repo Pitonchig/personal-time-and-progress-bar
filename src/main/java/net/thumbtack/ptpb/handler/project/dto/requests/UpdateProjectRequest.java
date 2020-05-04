@@ -6,14 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateItemRequest {
+public class UpdateProjectRequest {
     @NotEmpty
-    private String content;
-    private LocalDateTime due;
+    private String name;
 }

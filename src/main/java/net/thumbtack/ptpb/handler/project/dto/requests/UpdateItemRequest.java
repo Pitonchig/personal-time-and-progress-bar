@@ -1,24 +1,20 @@
-package net.thumbtack.ptpb.handler.project.dto.responses;
+package net.thumbtack.ptpb.handler.project.dto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.thumbtack.ptpb.handler.common.Response;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetItemResponse implements Response {
-    private long id;
-    private long projectId;
-    private long userId;
+public class UpdateItemRequest {
+    @NotEmpty
     private String content;
-    private LocalDateTime due;
     @JsonProperty("isCompleted")
     private boolean isCompleted;
 }

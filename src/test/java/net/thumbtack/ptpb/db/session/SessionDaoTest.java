@@ -49,7 +49,7 @@ public class SessionDaoTest {
                 .id(System.nanoTime())
                 .name("userName")
                 .password("password")
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);

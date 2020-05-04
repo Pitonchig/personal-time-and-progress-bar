@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PtpbError {
     private String code;
-    private String field;
     private String message;
 }

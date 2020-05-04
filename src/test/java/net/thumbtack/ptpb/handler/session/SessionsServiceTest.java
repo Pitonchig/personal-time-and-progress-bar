@@ -51,7 +51,7 @@ public class SessionsServiceTest {
                 .name(request.getLogin())
                 .password(request.getPassword())
                 .token(UUID.randomUUID().toString())
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserByName(request.getLogin())).thenReturn(Optional.of(user));
         LoginUserResponse response = sessionsService.loginUser(request, uuid);
