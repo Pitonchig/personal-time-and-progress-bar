@@ -56,7 +56,7 @@ public class UsersControllerTest {
         RegisterUserResponse response = RegisterUserResponse.builder()
                 .id(System.nanoTime())
                 .build();
-        when(usersService.registerUser(request, uuid)).thenReturn(response);
+        when(usersService.registerUser(any(RegisterUserRequest.class), anyString())).thenReturn(response);
 
         MvcResult result = mockMvc.perform(post(url)
                 .content(objectMapper.writeValueAsString(request))
@@ -69,7 +69,7 @@ public class UsersControllerTest {
 
         RegisterUserResponse resultResponse = objectMapper.readValue(result.getResponse().getContentAsString(), RegisterUserResponse.class);
         assertNotNull(resultResponse);
-        verify(usersService, times(1)).registerUser(request, uuid);
+        verify(usersService, times(1)).registerUser(any(RegisterUserRequest.class), anyString());
         assertEquals(response, resultResponse);
     }
 

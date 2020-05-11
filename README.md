@@ -25,7 +25,7 @@ The components structure is described in the diagram: [components diagram](https
 For production release run following commands:
 
 ```sh
-$ mvn package
+$ mvn package spring-boot:repackage
 ```
 
 # Installation
