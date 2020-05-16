@@ -41,6 +41,7 @@ public class UserDaoTest {
     void testInsertAndGetUserByName() throws PtpbException {
         String userName = "User";
         User user = User.builder()
+                .id(UUID.randomUUID().toString())
                 .name(userName)
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -58,7 +59,7 @@ public class UserDaoTest {
         List<User> users = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             User user = User.builder()
-                    .id(System.nanoTime())
+                    .id(UUID.randomUUID().toString())
                     .name(String.format("User-%d", i))
                     .password(String.format("password-%d", i))
                     .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -69,7 +70,7 @@ public class UserDaoTest {
         users.forEach(userDao::insertUser);
 
         User notInsertedUser = User.builder()
-                .id(System.nanoTime())
+                .id(UUID.randomUUID().toString())
                 .name("NotInsertedUser")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -87,6 +88,7 @@ public class UserDaoTest {
     @Test
     void testIsRegistered() {
         User user = User.builder()
+                .id(UUID.randomUUID().toString())
                 .name("User")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -100,7 +102,7 @@ public class UserDaoTest {
 
     @Test
     void testDeleteUser() {
-        long id = System.nanoTime();
+        String id = UUID.randomUUID().toString();
         User user = User.builder()
                 .id(id)
                 .name("User")
@@ -122,7 +124,7 @@ public class UserDaoTest {
 
         for (int i = 0; i < count; i++) {
             User user = User.builder()
-                    .id(System.nanoTime())
+                    .id(UUID.randomUUID().toString())
                     .name(String.format("User-%d", i))
                     .password("password")
                     .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))

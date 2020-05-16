@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetProjectResponse implements Response {
-    private long id;
+    private String id;
     private String name;
     @Singular
     List<GetItemResponse> items;

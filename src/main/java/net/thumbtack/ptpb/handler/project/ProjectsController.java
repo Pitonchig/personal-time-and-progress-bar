@@ -15,8 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Slf4j
@@ -44,7 +43,7 @@ public class ProjectsController {
 
 
     @PutMapping(value = "{projectId}")
-    public Response updateProject(@PathVariable @NotNull @Min(1) long projectId,
+    public Response updateProject(@PathVariable @NotEmpty String projectId,
                                   @RequestBody @Valid UpdateProjectRequest request,
                                   @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
         return projectsService.updateProject(projectId, request, cookie);
@@ -52,14 +51,14 @@ public class ProjectsController {
 
 
     @DeleteMapping(value = "{projectId}")
-    public Response deleteProject(@PathVariable @NotNull @Min(1) long projectId,
+    public Response deleteProject(@PathVariable @NotEmpty String projectId,
                                   @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
         return projectsService.deleteProject(projectId, cookie);
     }
 
 
     @GetMapping(value = "{projectId}")
-    public Response getProject(@PathVariable @NotNull @Min(1) long projectId,
+    public Response getProject(@PathVariable @NotEmpty String projectId,
                                @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
         return projectsService.getProject(projectId, cookie);
     }
@@ -74,7 +73,7 @@ public class ProjectsController {
 
     @PostMapping(value = "{projectId}/items")
     public CreateItemResponse createItem(@RequestBody @Valid CreateItemRequest request,
-                                         @PathVariable @NotNull @Min(1) long projectId,
+                                         @PathVariable @NotEmpty String projectId,
                                          @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
         log.info("createItem: projectId={}, request={}", projectId, request);
         return projectsService.createItem(request, projectId, cookie);
@@ -82,7 +81,7 @@ public class ProjectsController {
 
 
     @PutMapping(value = "items/{itemId}")
-    public Response updateItem(@PathVariable @NotNull @Min(1) long itemId,
+    public Response updateItem(@PathVariable @NotEmpty String itemId,
                                   @RequestBody @Valid UpdateItemRequest request,
                                   @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
         log.info("updateItem: itemId={}, request={}", itemId, request);
@@ -91,8 +90,9 @@ public class ProjectsController {
 
 
     @DeleteMapping(value = "items/{itemId}")
-    public Response deleteItem(@PathVariable @NotNull @Min(1) long itemId,
+    public Response deleteItem(@PathVariable @NotEmpty String itemId,
                                @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
+        log.info("deleteItem: itemId={}", itemId);
         return projectsService.deleteItemById(itemId, cookie);
     }
 

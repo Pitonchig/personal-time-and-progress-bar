@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Session implements Serializable {
     @Id
     private String uuid;
+    private String userId;
     private LocalDateTime dateTime;
-    private long userId;
     private boolean isExpired;
 }

@@ -46,7 +46,7 @@ public class SessionDaoTest {
         String uuid = UUID.randomUUID().toString();
 
         User user = User.builder()
-                .id(System.nanoTime())
+                .id(UUID.randomUUID().toString())
                 .name("userName")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
@@ -73,7 +73,7 @@ public class SessionDaoTest {
         for (int i = 0; i < 10; i++) {
             Session session = Session.builder()
                     .uuid(UUID.randomUUID().toString())
-                    .userId(System.nanoTime())
+                    .userId(UUID.randomUUID().toString())
                     .dateTime(LocalDateTime.now())
                     .isExpired(false)
                     .build();
@@ -83,7 +83,7 @@ public class SessionDaoTest {
 
         Session notInsertedSession = Session.builder()
                 .uuid(UUID.randomUUID().toString())
-                .userId(System.nanoTime())
+                .userId(UUID.randomUUID().toString())
                 .dateTime(LocalDateTime.now())
                 .isExpired(false)
                 .build();
@@ -103,7 +103,7 @@ public class SessionDaoTest {
 
         Session session = Session.builder()
                 .uuid(uuid)
-                .userId(System.nanoTime())
+                .userId(UUID.randomUUID().toString())
                 .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();
@@ -119,7 +119,7 @@ public class SessionDaoTest {
         for (int i = 0; i < count; i++) {
             Session session = Session.builder()
                     .uuid(UUID.randomUUID().toString())
-                    .userId(System.nanoTime())
+                    .userId(UUID.randomUUID().toString())
                     .dateTime(LocalDateTime.now())
                     .isExpired(false)
                     .build();

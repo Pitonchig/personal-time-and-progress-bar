@@ -17,17 +17,21 @@ public class ProjectDao {
         projectMapper.save(project);
     }
 
-    public Optional<Project> getProjectById(long id) {
+    public Optional<Project> getProjectById(String id) {
         return projectMapper.findById(id);
     }
 
-    public List<Project> getProjectsByUserId(long id) {
+    public List<Project> getProjectsByUserId(String userId) {
         List<Project> projects = new LinkedList<>();
-        projectMapper.findByUserId(id).forEach(projects::add);
+        projectMapper.findByUserId(userId).forEach(projects::add);
         return projects;
     }
 
     public void updateProject(Project project) {
         projectMapper.save(project);
+    }
+
+    public void deleteProject(String projectId) {
+        projectMapper.deleteById(projectId);
     }
 }

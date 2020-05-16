@@ -98,7 +98,7 @@ public class UsersServiceTest {
 
     @Test
     void testDeleteUser() throws PtpbException {
-        long id = System.nanoTime();
+        String id = UUID.randomUUID().toString();
         String uuid = UUID.randomUUID().toString();
         DeleteUserRequest request = DeleteUserRequest.builder()
                 .login("login")
@@ -121,7 +121,7 @@ public class UsersServiceTest {
 
     @Test
     void testDeleteUserByWrongId() {
-        long id = System.nanoTime();
+        String id = UUID.randomUUID().toString();
         String uuid = UUID.randomUUID().toString();
         DeleteUserRequest request = DeleteUserRequest.builder()
                 .login("login")
@@ -141,7 +141,7 @@ public class UsersServiceTest {
 
     @Test
     void testDeleteUserWithWrongLoginAndPassword() {
-        long id = System.nanoTime();
+        String id = UUID.randomUUID().toString();
         String uuid = UUID.randomUUID().toString();
         DeleteUserRequest request = DeleteUserRequest.builder()
                 .login("login")

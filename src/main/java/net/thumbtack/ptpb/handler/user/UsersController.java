@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Slf4j
@@ -41,7 +41,7 @@ public class UsersController {
 
     @DeleteMapping(value = "{id}")
     public Response deleteUser(@RequestBody @Valid DeleteUserRequest request,
-                               @PathVariable(value = "id") @Valid @Min(1) long id,
+                               @PathVariable(value = "id") @Valid @NotEmpty String id,
                                @CookieValue(value = Types.UUID) String cookie
     ) throws PtpbException {
         log.info("[DELETE] delete user: id={}, request={}, uuid={}", id, request, cookie);

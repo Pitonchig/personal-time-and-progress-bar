@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetItemResponse implements Response {
-    private long id;
-    private long projectId;
-    private long userId;
+    private String id;
+    private String projectId;
+    private String userId;
     private String content;
     private LocalDateTime due;
     @JsonProperty("isCompleted")

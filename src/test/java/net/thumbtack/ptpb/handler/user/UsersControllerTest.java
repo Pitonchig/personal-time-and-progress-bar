@@ -54,7 +54,7 @@ public class UsersControllerTest {
                 .build();
 
         RegisterUserResponse response = RegisterUserResponse.builder()
-                .id(System.nanoTime())
+                .id(UUID.randomUUID().toString())
                 .build();
         when(usersService.registerUser(any(RegisterUserRequest.class), anyString())).thenReturn(response);
 
@@ -75,8 +75,8 @@ public class UsersControllerTest {
 
     @Test
     void testDeleteUser() throws Exception {
-        long id = System.nanoTime();
-        String url = String.format("/api/users/%d", id);
+        String id = UUID.randomUUID().toString();
+        String url = String.format("/api/users/%s", id);
 
         String uuid = UUID.randomUUID().toString();
         DeleteUserRequest request = DeleteUserRequest.builder()

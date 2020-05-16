@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User implements Serializable {
     @Id
-    private long id;
+    private String id;
     private String name;
     private String password;
     private String email;

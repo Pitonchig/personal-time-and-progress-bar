@@ -17,17 +17,21 @@ public class ItemDao {
         itemMapper.save(item);
     }
 
-    public List<Item> getItemsByProjectId(long id) {
+    public List<Item> getItemsByProjectId(String id) {
         List<Item> items = new LinkedList<>();
         itemMapper.findByProjectId(id).forEach(items::add);
         return items;
     }
 
-    public Optional<Item> getItemById(long itemId) {
+    public Optional<Item> getItemById(String itemId) {
         return itemMapper.findById(itemId);
     }
 
     public void updateItem(Item item) {
         itemMapper.save(item);
+    }
+
+    public void deleteItemById(String itemId) {
+        itemMapper.deleteById(itemId);
     }
 }

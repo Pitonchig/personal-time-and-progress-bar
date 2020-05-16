@@ -9,5 +9,5 @@ import net.thumbtack.ptpb.handler.common.Response;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateProjectResponse implements Response {
-    private long id;
+    private String id;
 }

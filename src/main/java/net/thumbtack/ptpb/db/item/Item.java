@@ -16,9 +16,9 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class Item {
     @Id
-    private long id;
-    private long projectId;
-    private long userId;
+    private String id;
+    private String projectId;
+    private String userId;
 
     private String content;
     private boolean isCompleted;

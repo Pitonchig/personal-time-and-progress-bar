@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class Project {
     @Id
-    private long id;
-    private long userId;
+    private String id;
+    private String userId;
     private String projectName;
 }

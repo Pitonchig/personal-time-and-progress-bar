@@ -52,7 +52,7 @@ public class SessionsControllerTest {
                 .build();
 
         LoginUserResponse response = LoginUserResponse.builder()
-                .id(System.nanoTime())
+                .id(UUID.randomUUID().toString())
                 .build();
 
         when(sessionsService.loginUser(any(LoginUserRequest.class), anyString())).thenReturn(response);

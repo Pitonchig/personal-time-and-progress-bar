@@ -15,7 +15,7 @@ public class UserDao {
 
     private final UserMapper userMapper;
 
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getUserById(String id) {
         return userMapper.findById(id);
     }
 
@@ -46,7 +46,7 @@ public class UserDao {
         userMapper.save(user);
     }
 
-    public void deleteUser(long id) {
+    public void deleteUser(String id) {
         userMapper.deleteById(id);
     }
 

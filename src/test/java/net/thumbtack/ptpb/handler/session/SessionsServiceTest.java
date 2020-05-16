@@ -47,7 +47,7 @@ public class SessionsServiceTest {
                 .password("pass")
                 .build();
         User user = User.builder()
-                .id(System.nanoTime())
+                .id(UUID.randomUUID().toString())
                 .name(request.getLogin())
                 .password(request.getPassword())
                 .token(UUID.randomUUID().toString())
@@ -72,10 +72,9 @@ public class SessionsServiceTest {
     @Test
     void testLogoutUser() throws PtpbException {
         String uuid = UUID.randomUUID().toString();
-        long id = System.nanoTime();
         Session session = Session.builder()
                 .uuid(uuid)
-                .userId(id)
+                .userId(UUID.randomUUID().toString())
                 .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();

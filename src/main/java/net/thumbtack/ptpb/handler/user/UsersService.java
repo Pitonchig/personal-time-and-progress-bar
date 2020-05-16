@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.UUID;
 
 import static net.thumbtack.ptpb.common.ErrorCode.*;
 
@@ -33,7 +34,7 @@ public class UsersService {
     checkIsUserNameFree(request.getLogin());
 
     User user = User.builder()
-            .id(System.nanoTime())
+            .id(UUID.randomUUID().toString())
             .name(request.getLogin())
             .password(request.getPassword())
             .email(request.getEmail())
@@ -76,7 +77,7 @@ public class UsersService {
 //        return new RegisterUserResponse(user.getId());
 //    }
 
-    public EmptyResponse deleteUser(DeleteUserRequest request, long userId, String uuid) throws PtpbException {
+    public EmptyResponse deleteUser(DeleteUserRequest request, String userId, String uuid) throws PtpbException {
         checkSessionIsValid(uuid);
         Optional<User> result = userDao.getUserById(userId);
         User user = result.orElseThrow(() -> new PtpbException(USER_NOT_FOUND));
