@@ -15,5 +15,6 @@ import java.time.LocalDateTime;
 public class CreateItemRequest {
     @NotEmpty
     private String content;
-    private LocalDateTime due;
+    private LocalDateTime start;
+    private LocalDateTime finish;
 }

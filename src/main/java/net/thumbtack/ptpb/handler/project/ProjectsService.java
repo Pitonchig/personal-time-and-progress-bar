@@ -104,6 +104,8 @@ public class ProjectsService {
                 .projectId(projectId)
                 .content(request.getContent())
                 .isCompleted(false)
+                .start(request.getStart())
+                .finish(request.getFinish())
                 .build();
 
         itemDao.insertItem(item);
@@ -131,6 +133,8 @@ public class ProjectsService {
             .projectId(item.getProjectId())
             .isCompleted(item.isCompleted())
             .content(item.getContent())
+            .start(item.getStart())
+            .finish(item.getFinish())
             .build();
     }
 
@@ -183,6 +187,8 @@ public class ProjectsService {
         Item item = result.get();
         item.setContent(request.getContent());
         item.setCompleted(request.isCompleted());
+        item.setStart(request.getStart());
+        item.setFinish(request.getFinish());
         itemDao.updateItem(item);
         return new EmptyResponse();
     }

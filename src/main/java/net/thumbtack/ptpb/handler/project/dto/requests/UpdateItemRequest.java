@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -17,4 +18,6 @@ public class UpdateItemRequest {
     private String content;
     @JsonProperty("isCompleted")
     private boolean isCompleted;
+    private LocalDateTime start;
+    private LocalDateTime finish;
 }

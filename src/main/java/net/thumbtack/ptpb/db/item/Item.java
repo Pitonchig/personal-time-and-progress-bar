@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -22,4 +23,6 @@ public class Item {
 
     private String content;
     private boolean isCompleted;
+    private LocalDateTime start;
+    private LocalDateTime finish;
 }
