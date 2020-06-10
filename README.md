@@ -25,7 +25,7 @@ The components structure is described in the diagram: [components diagram](https
 For production release run following commands:
 
 ```sh
-$ mvn package
+$ mvn package spring-boot:repackage
 ```
 
 # Installation
@@ -34,6 +34,11 @@ Once building from sources is done and environment is running then start the app
 
 ```sh
 $ java -jar ptpb-handler-1.0-SNAPSHOT.jar
+```
+
+For define configuration and log path use following params:
+```sh
+--spring.config.location=./config/ --logging.config=./config/logback.xml
 ```
 
 Verify the deployment by navigating to your server address in your preferred browser:
