@@ -1,4 +1,4 @@
-package net.thumbtack.ptpb.handler.session.dto.responses;
+package net.thumbtack.ptpb.handler.todoist.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +10,6 @@ import net.thumbtack.ptpb.handler.common.Response;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginUserResponse implements Response {
-    private String id;
-    private String name;
-    private String email;
+public class UpdateTodoistTokenResponse implements Response {
     private boolean isTodoistLinked;
 }

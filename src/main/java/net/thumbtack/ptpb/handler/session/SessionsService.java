@@ -3,6 +3,8 @@ package net.thumbtack.ptpb.handler.session;
 import lombok.RequiredArgsConstructor;
 import net.thumbtack.ptpb.db.session.Session;
 import net.thumbtack.ptpb.db.session.SessionDao;
+import net.thumbtack.ptpb.db.todoist.Todoist;
+import net.thumbtack.ptpb.db.todoist.TodoistDao;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
@@ -24,10 +26,12 @@ public class SessionsService {
 
     private final SessionDao sessionDao;
     private final UserDao userDao;
+    private final TodoistDao todoistDao;
 
     public LoginUserResponse loginUser(LoginUserRequest request, String uuid) throws PtpbException {
         Optional<User> result = userDao.getUserByName(request.getLogin());
         User user = result.orElseThrow(() -> new PtpbException(ErrorCode.USER_WRONG_NAME_OR_PASSWORD));
+        boolean isTodoistLinked = todoistDao.isTodoistLinked(user.getId());
 
         Session session = Session.builder()
                 .userId(user.getId())
@@ -35,7 +39,12 @@ public class SessionsService {
                 .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         sessionDao.insert(session);
-        return new LoginUserResponse(session.getUserId());
+        return LoginUserResponse.builder()
+                .id(session.getUserId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .isTodoistLinked(isTodoistLinked)
+                .build();
     }
 
     public EmptyResponse logoutUser(String uuid) throws PtpbException {
