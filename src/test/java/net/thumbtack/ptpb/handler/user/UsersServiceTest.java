@@ -9,8 +9,6 @@ import net.thumbtack.ptpb.handler.user.dto.requests.DeleteUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.requests.RegisterUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.responses.RegisterUserResponse;
 import net.thumbtack.ptpb.rabbitmq.user.RabbitMqUserService;
-import net.thumbtack.ptpb.rabbitmq.user.request.SyncUserAmqpRequest;
-import net.thumbtack.ptpb.rabbitmq.user.response.SyncUserAmqpResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,17 +49,9 @@ public class UsersServiceTest {
                 .email("email@gmail.com")
                 .build();
         when(userDao.isRegistered(request.getLogin())).thenReturn(false);
-        SyncUserAmqpResponse amqpResponse = SyncUserAmqpResponse.builder()
-                .id(System.nanoTime())
-                .name(request.getLogin())
-                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .build();
-        when(rabbitMqUserService.syncUser(any(SyncUserAmqpRequest.class))).thenReturn(amqpResponse);
-
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
 
         RegisterUserResponse response = usersService.registerUser(request, uuid);
-
 
         verify(userDao, times(1)).insertUser(userArgumentCaptor.capture());
         User user = userArgumentCaptor.getValue();

@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class SyncUserAmqpResponse {
-    private long id;
-    private String name;
-    private LocalDateTime registered;
-}
+//@Data
+//@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+//public class SyncUserAmqpResponse {
+//    private String id;
+//    private String name;
+//    private LocalDateTime registered;
+//}

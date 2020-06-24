@@ -6,14 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-//@Data
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@JsonSerialize
-//public class SyncUserAmqpRequest {
-//    private String userId;
-//    private String token;
-//}
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonSerialize
+public class SyncUserTokenAmqpRequest {
+    private String userId;
+    private String token;
+}

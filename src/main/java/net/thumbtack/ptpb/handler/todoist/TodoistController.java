@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.thumbtack.ptpb.common.PtpbException;
 import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.common.Types;
-import net.thumbtack.ptpb.handler.project.dto.requests.CreateProjectRequest;
+import net.thumbtack.ptpb.handler.todoist.dto.request.SyncProjectsRequest;
 import net.thumbtack.ptpb.handler.todoist.dto.request.UpdateTodoistTokenRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,24 @@ import javax.validation.Valid;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/users/tokens",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
+@RequestMapping(value = "/api/users",
+        //consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class TodoistController {
     private final TodoistService todoistService;
 
-    @PostMapping()
+    @PutMapping(value = "tokens")
     public Response updateTodoistToken(@RequestBody @Valid UpdateTodoistTokenRequest request,
                                   @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
-        log.info("[POST] updateTodoistToken: request={}", request);
+        log.info("[PUT] updateTodoistToken: request={}", request);
         return todoistService.updateTodoistToken(request, cookie);
+    }
+
+    @PutMapping(value = "services")
+    public Response syncProjects(@RequestBody @Valid SyncProjectsRequest request,
+                                       @CookieValue(value = Types.UUID) String cookie) throws PtpbException, JsonProcessingException {
+        log.info("[PUT] syncProjects: request={}", request);
+        return todoistService.syncProjects(request, cookie);
     }
 
 }

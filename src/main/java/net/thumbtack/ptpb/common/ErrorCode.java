@@ -14,6 +14,8 @@ public enum ErrorCode {
     SESSION_IS_MISSING("a cookie is missing"),
     PROJECT_NOT_FOUND( "project is not found"),
     ITEM_NOT_FOUND("item is not found"),
+    TOKEN_NOT_FOUND("sync token is not found"),
+    WRAPPER_ERROR("wrapper error occurred"),        //TODO: tmp
     WRAPPER_TIMEOUT("timeout while waiting for a ptpb-wrapper reply ");
 
     private final String message;

@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@JsonSerialize
-@NoArgsConstructor
-public class DeleteItemAmqpResponse {
-
-}
+//@Data
+//@Builder
+//@JsonSerialize
+//@NoArgsConstructor
+//public class DeleteItemAmqpResponse {
+//
+//}
