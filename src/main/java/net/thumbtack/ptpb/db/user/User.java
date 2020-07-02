@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.db.user;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+@JsonSerialize
+public class User {
     @Id
     private String id;
     private String name;

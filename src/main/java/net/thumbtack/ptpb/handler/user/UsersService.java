@@ -48,7 +48,12 @@ public class UsersService {
             .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
             .build();
     sessionDao.insert(session);
-    return new RegisterUserResponse(user.getId());
+    return RegisterUserResponse.builder()
+            .id(user.getId())
+            .email(user.getEmail())
+            .isTodoistLinked(false)
+            .name(user.getName())
+            .build();
 }
 
 

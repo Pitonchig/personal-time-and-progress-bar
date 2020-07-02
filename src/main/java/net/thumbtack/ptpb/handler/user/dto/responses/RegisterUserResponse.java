@@ -12,4 +12,7 @@ import net.thumbtack.ptpb.handler.common.Response;
 @AllArgsConstructor
 public class RegisterUserResponse implements Response {
     private String id;
+    private String name;
+    private String email;
+    private boolean isTodoistLinked;
 }
