@@ -1,4 +1,4 @@
-package net.thumbtack.ptpb.db.todoist;
+package net.thumbtack.ptpb.db.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +13,8 @@ import javax.persistence.Entity;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Todoist {
+public class Services {
     @Id
     private String userId;
-    private String token;
+    private boolean isTodoistLinked;
 }

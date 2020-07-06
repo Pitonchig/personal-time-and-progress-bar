@@ -50,7 +50,6 @@ public class SessionDaoTest {
                 .name("userName")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);
 

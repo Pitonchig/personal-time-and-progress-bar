@@ -32,12 +32,10 @@ public class UsersServiceTest {
     private UserDao userDao;
     @MockBean
     private SessionDao sessionDao;
-    @MockBean
-    private RabbitMqUserService rabbitMqUserService;
 
     @BeforeEach
     void setup() {
-        usersService = new UsersService(rabbitMqUserService, userDao, sessionDao);
+        usersService = new UsersService(userDao, sessionDao);
     }
 
     @Test
@@ -98,7 +96,6 @@ public class UsersServiceTest {
                 .id(id)
                 .name(request.getLogin())
                 .password(request.getPassword())
-                .token(UUID.randomUUID().toString())
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));
@@ -141,7 +138,6 @@ public class UsersServiceTest {
                 .id(id)
                 .name("wrong login")
                 .password("wrong password")
-                .token(UUID.randomUUID().toString())
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));

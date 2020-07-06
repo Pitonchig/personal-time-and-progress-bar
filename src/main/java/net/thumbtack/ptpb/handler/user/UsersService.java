@@ -24,63 +24,36 @@ import static net.thumbtack.ptpb.common.ErrorCode.*;
 @Service
 @RequiredArgsConstructor
 public class UsersService {
-
-    private final RabbitMqUserService rabbitMqUserService;
     private final UserDao userDao;
     private final SessionDao sessionDao;
 
     public RegisterUserResponse registerUser(RegisterUserRequest request,
-                                         String uuid) throws PtpbException, JsonProcessingException {
-    checkIsUserNameFree(request.getLogin());
+                                             String uuid) throws PtpbException, JsonProcessingException {
+        checkIsUserNameFree(request.getLogin());
 
-    User user = User.builder()
-            .id(UUID.randomUUID().toString())
-            .name(request.getLogin())
-            .password(request.getPassword())
-            .email(request.getEmail())
-            .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-            .build();
-    userDao.insertUser(user);
+        User user = User.builder()
+                .id(UUID.randomUUID().toString())
+                .name(request.getLogin())
+                .password(request.getPassword())
+                .email(request.getEmail())
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
+        userDao.insertUser(user);
 
-    Session session = Session.builder()
-            .userId(user.getId())
-            .uuid(uuid)
-            .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-            .build();
-    sessionDao.insert(session);
-    return RegisterUserResponse.builder()
-            .id(user.getId())
-            .email(user.getEmail())
-            .isTodoistLinked(false)
-            .name(user.getName())
-            .build();
-}
+        Session session = Session.builder()
+                .userId(user.getId())
+                .uuid(uuid)
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
+        sessionDao.insert(session);
 
-
-//    public RegisterUserResponse registerUser(RegisterUserRequest request,
-//                                             String uuid) throws PtpbException, JsonProcessingException {
-//        checkIsUserNameFree(request.getLogin());
-//
-//        SyncUserAmqpRequest syncUserAmqpRequest = new SyncUserAmqpRequest(request.getToken());
-//        SyncUserAmqpResponse response = rabbitMqUserService.syncUser(syncUserAmqpRequest);
-//
-//        User user = User.builder()
-//                .id(response.getId())
-//                .name(request.getLogin())
-//                .password(request.getPassword())
-//                .token(request.getToken())
-//                .registered(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-//                .build();
-//        userDao.insertUser(user);
-//
-//        Session session = Session.builder()
-//                .userId(user.getId())
-//                .uuid(uuid)
-//                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-//                .build();
-//        sessionDao.insert(session);
-//        return new RegisterUserResponse(user.getId());
-//    }
+        return RegisterUserResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .isTodoistLinked(false)
+                .name(user.getName())
+                .build();
+    }
 
     public EmptyResponse deleteUser(DeleteUserRequest request, String userId, String uuid) throws PtpbException {
         checkSessionIsValid(uuid);

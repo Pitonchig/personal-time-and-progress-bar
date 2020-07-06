@@ -2,7 +2,7 @@ package net.thumbtack.ptpb.handler.session;
 
 import net.thumbtack.ptpb.db.session.Session;
 import net.thumbtack.ptpb.db.session.SessionDao;
-import net.thumbtack.ptpb.db.todoist.TodoistDao;
+import net.thumbtack.ptpb.db.services.ServicesDao;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
@@ -36,11 +36,11 @@ public class SessionsServiceTest {
     private UserDao userDao;
 
     @MockBean
-    private TodoistDao todoistDao;
+    private ServicesDao servicesDao;
 
     @BeforeEach
     void setup() {
-        sessionsService = new SessionsService(sessionDao, userDao, todoistDao);
+        sessionsService = new SessionsService(sessionDao, userDao, servicesDao);
     }
 
     @Test
@@ -54,7 +54,6 @@ public class SessionsServiceTest {
                 .id(UUID.randomUUID().toString())
                 .name(request.getLogin())
                 .password(request.getPassword())
-                .token(UUID.randomUUID().toString())
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserByName(request.getLogin())).thenReturn(Optional.of(user));

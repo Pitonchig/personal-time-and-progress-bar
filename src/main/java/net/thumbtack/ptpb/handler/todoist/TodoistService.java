@@ -10,8 +10,8 @@ import net.thumbtack.ptpb.db.project.Project;
 import net.thumbtack.ptpb.db.project.ProjectDao;
 import net.thumbtack.ptpb.db.session.Session;
 import net.thumbtack.ptpb.db.session.SessionDao;
-import net.thumbtack.ptpb.db.todoist.Todoist;
-import net.thumbtack.ptpb.db.todoist.TodoistDao;
+import net.thumbtack.ptpb.db.services.Services;
+import net.thumbtack.ptpb.db.services.ServicesDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
 import net.thumbtack.ptpb.handler.todoist.dto.request.SyncProjectsRequest;
 import net.thumbtack.ptpb.handler.todoist.dto.request.UpdateTodoistTokenRequest;
@@ -38,7 +38,7 @@ import static net.thumbtack.ptpb.common.ErrorCode.*;
 @Service
 @RequiredArgsConstructor
 public class TodoistService {
-    private final TodoistDao todoistDao;
+    private final ServicesDao servicesDao;
     private final SessionDao sessionDao;
     private final ProjectDao projectDao;
     private final ItemDao itemDao;
@@ -57,15 +57,21 @@ public class TodoistService {
         SyncUserTokenAmqpResponse amqpResponse = rabbitMqUserService.syncUserToken(amqpRequest);
         log.info("amqpResponse={}", amqpResponse);
 
-        return UpdateTodoistTokenResponse.builder()
+        Services services = Services.builder()
+                .userId(session.getUserId())
                 .isTodoistLinked(amqpResponse.isValid())
+                .build();
+        servicesDao.insertServices(services);
+
+        return UpdateTodoistTokenResponse.builder()
+                .isTodoistLinked(services.isTodoistLinked())
                 .build();
     }
 
     public EmptyResponse syncProjects(@Valid SyncProjectsRequest request, String cookie) throws PtpbException, JsonProcessingException {
         log.info("syncProjects: request={}, cookie={}", request, cookie);
         Session session = getSessionByUuid(cookie);
-        Optional<Todoist> todoist = todoistDao.getTodoistByUserUuid(session.getUserId());
+        Optional<Services> todoist = servicesDao.getServicesByUserUuid(session.getUserId());
 
         if (todoist.isEmpty()) {
             throw new PtpbException(TOKEN_NOT_FOUND);

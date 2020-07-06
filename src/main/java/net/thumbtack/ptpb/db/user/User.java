@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,9 +23,6 @@ public class User {
     private String password;
     private String email;
     private LocalDateTime registration;
-
-    private long todoistId;
-    private String token;
 }
 
 

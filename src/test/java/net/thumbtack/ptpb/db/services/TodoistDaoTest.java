@@ -1,9 +1,7 @@
-package net.thumbtack.ptpb.db.todoist;
+package net.thumbtack.ptpb.db.services;
 
-import net.thumbtack.ptpb.common.PtpbException;
 import net.thumbtack.ptpb.db.DbConfiguration;
 import net.thumbtack.ptpb.db.DbProperties;
-import net.thumbtack.ptpb.db.session.SessionDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +19,32 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {
         DbConfiguration.class,
         DbProperties.class,
-        TodoistDao.class
+        ServicesDao.class
 })
 public class TodoistDaoTest {
 
     @Autowired
-    private TodoistDao todoistDao;
+    private ServicesDao servicesDao;
 
     @BeforeEach
     void setup() {
-        todoistDao.deleteAllTodoists();
+        servicesDao.deleteAllServices();
     }
 
     @Test
     void testInsert() {
         String userUuid = UUID.randomUUID().toString();
-        String token = UUID.randomUUID().toString();
 
-        assertFalse(todoistDao.isTodoistLinked(userUuid));
-        Todoist todoist = Todoist.builder()
+        assertFalse(servicesDao.getServicesByUserUuid(userUuid).isPresent());
+        Services services = Services.builder()
                 .userId(userUuid)
-                .token(token)
+                .isTodoistLinked(true)
                 .build();
-        todoistDao.insertTodoist(todoist);
-        assertTrue(todoistDao.isTodoistLinked(userUuid));
-
-        Optional<Todoist> result = todoistDao.getTodoistByUserUuid(userUuid);
+        servicesDao.insertServices(services);
+        Optional<Services> result = servicesDao.getServicesByUserUuid(userUuid);
         assertTrue(result.isPresent());
-        assertEquals(todoist, result.get());
+        assertEquals(services, result.get());
+        assertTrue(result.get().isTodoistLinked());
     }
 
 }

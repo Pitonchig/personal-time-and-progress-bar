@@ -1,10 +1,10 @@
 package net.thumbtack.ptpb.handler.session;
 
 import lombok.RequiredArgsConstructor;
+import net.thumbtack.ptpb.db.services.Services;
 import net.thumbtack.ptpb.db.session.Session;
 import net.thumbtack.ptpb.db.session.SessionDao;
-import net.thumbtack.ptpb.db.todoist.Todoist;
-import net.thumbtack.ptpb.db.todoist.TodoistDao;
+import net.thumbtack.ptpb.db.services.ServicesDao;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.handler.common.EmptyResponse;
@@ -26,12 +26,13 @@ public class SessionsService {
 
     private final SessionDao sessionDao;
     private final UserDao userDao;
-    private final TodoistDao todoistDao;
+    private final ServicesDao servicesDao;
 
     public LoginUserResponse loginUser(LoginUserRequest request, String uuid) throws PtpbException {
         Optional<User> result = userDao.getUserByName(request.getLogin());
         User user = result.orElseThrow(() -> new PtpbException(ErrorCode.USER_WRONG_NAME_OR_PASSWORD));
-        boolean isTodoistLinked = todoistDao.isTodoistLinked(user.getId());
+        Optional<Services> services = servicesDao.getServicesByUserUuid(user.getId());
+        boolean isTodoistLinked = services.isPresent() && services.get().isTodoistLinked();
 
         Session session = Session.builder()
                 .userId(user.getId())

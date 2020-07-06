@@ -43,6 +43,11 @@
         <appender-ref ref="ConsoleAppender"/>
     </logger>
 
+    <logger name="org.springframework.data.aerospike" level="DEBUG" additivity="false">
+        <appender-ref ref="RollingFileAppender"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </logger>
+
 
 
 </configuration>

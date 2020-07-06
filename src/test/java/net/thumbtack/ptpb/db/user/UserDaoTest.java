@@ -45,7 +45,6 @@ public class UserDaoTest {
                 .name(userName)
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);
 
@@ -63,7 +62,6 @@ public class UserDaoTest {
                     .name(String.format("User-%d", i))
                     .password(String.format("password-%d", i))
                     .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .token(UUID.randomUUID().toString())
                     .build();
             users.add(user);
         }
@@ -74,7 +72,6 @@ public class UserDaoTest {
                 .name("NotInsertedUser")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .token(UUID.randomUUID().toString())
                 .build();
         List<User> results = userDao.getAllUsers();
 
@@ -92,7 +89,6 @@ public class UserDaoTest {
                 .name("User")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .token(UUID.randomUUID().toString())
                 .build();
 
         assertFalse(userDao.isRegistered(user.getName()));
@@ -108,7 +104,6 @@ public class UserDaoTest {
                 .name("User")
                 .password("password")
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .token(UUID.randomUUID().toString())
                 .build();
         userDao.insertUser(user);
         assertTrue(userDao.isRegistered(user.getName()));
@@ -128,7 +123,6 @@ public class UserDaoTest {
                     .name(String.format("User-%d", i))
                     .password("password")
                     .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .token(UUID.randomUUID().toString())
                     .build();
             userDao.insertUser(user);
         }
