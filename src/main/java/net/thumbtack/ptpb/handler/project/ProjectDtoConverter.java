@@ -17,12 +17,18 @@ import java.util.UUID;
 public class ProjectDtoConverter {
 
     static public ItemDto toItemDto(Item item) {
+        if (item == null) {
+            return null;
+        }
+        ZonedDateTime start = item.getStart() != null ? ZonedDateTime.of(item.getStart().toLocalDate(), item.getStart().toLocalTime(), ZoneId.of("UTC")) : null;
+        ZonedDateTime finish = item.getFinish() != null ? ZonedDateTime.of(item.getFinish().toLocalDate(), item.getFinish().toLocalTime(), ZoneId.of("UTC")) : null;
+
         return ItemDto.builder()
                 .id(item.getId())
                 .isCompleted(item.isCompleted())
                 .content(item.getContent())
-                .start(ZonedDateTime.of(item.getStart().toLocalDate(), item.getStart().toLocalTime(), ZoneId.of("UTC")))
-                .finish(ZonedDateTime.of(item.getFinish().toLocalDate(), item.getFinish().toLocalTime(), ZoneId.of("UTC")))
+                .start(start)
+                .finish(finish)
                 .build();
     }
 
@@ -46,7 +52,7 @@ public class ProjectDtoConverter {
     static public List<ProjectResponse> toProjectResponseList(List<Project> projects) {
         List<ProjectResponse> responses = new LinkedList<>();
 
-        if(projects == null) {
+        if (projects == null) {
             return responses;
         }
 

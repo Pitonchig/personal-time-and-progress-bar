@@ -72,6 +72,12 @@ public class TodoistService {
                 .build();
         log.info("amqpRequest={}", amqpRequest);
         SyncProjectsAmqpResponse amqpResponse = rabbitMqProjectService.syncProjects(amqpRequest);
+        if (amqpResponse == null) {
+            throw new PtpbException(WRAPPER_TIMEOUT);
+        }
+        user.setProjects(TodoistDtoConverter.fromProjectAmqpDto(amqpResponse.getProjects()));
+        userDao.insertUser(user);
+
         log.info("amqpResponse={}", amqpResponse);
         return new EmptyResponse();
     }
