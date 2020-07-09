@@ -1,10 +1,11 @@
-package net.thumbtack.ptpb.rabbitmq.project.request;
+package net.thumbtack.ptpb.rabbitmq.project.dto.request;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.thumbtack.ptpb.rabbitmq.project.dto.ProjectDto;
+import net.thumbtack.ptpb.rabbitmq.project.dto.ProjectAmqpDto;
 
 import java.util.List;
 
@@ -12,9 +13,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonSerialize
 public class SyncProjectsAmqpRequest {
     private String userId;
     private boolean toTodoist;
     private boolean fromTodoist;
-    private List<ProjectDto> projects;
+    private List<ProjectAmqpDto> projects;
 }

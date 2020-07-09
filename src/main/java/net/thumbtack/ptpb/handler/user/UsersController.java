@@ -22,7 +22,6 @@ import java.util.UUID;
 @RestController
 @Validated
 @RequiredArgsConstructor
-//@CrossOrigin(value = {"http://127.0.0.1:9001", "http://127.0.0.1:8080"})
 @RequestMapping(value = "/api/users",
         //consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)

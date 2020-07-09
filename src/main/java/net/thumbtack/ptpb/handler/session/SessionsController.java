@@ -21,7 +21,6 @@ import java.util.UUID;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/sessions",
-        //consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class SessionsController {
 

@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +24,10 @@ public class User {
     private String password;
     private String email;
     private LocalDateTime registration;
+
+    private List<Project> projects;
+
+    private boolean isTodoistLinked;
 }
 
 

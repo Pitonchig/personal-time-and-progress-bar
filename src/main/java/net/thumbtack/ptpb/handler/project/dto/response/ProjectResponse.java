@@ -1,7 +1,8 @@
-package net.thumbtack.ptpb.handler.project.dto.responses;
+package net.thumbtack.ptpb.handler.project.dto.response;
 
 import lombok.*;
 import net.thumbtack.ptpb.handler.common.Response;
+import net.thumbtack.ptpb.handler.project.dto.ItemDto;
 
 import java.util.List;
 
@@ -9,11 +10,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetProjectResponse implements Response {
+public class ProjectResponse implements Response {
     private String id;
     private String name;
     @Singular
-    List<GetItemResponse> items;
-    private int color;
-    private boolean isFavorite;
+    List<ItemDto> items;
 }

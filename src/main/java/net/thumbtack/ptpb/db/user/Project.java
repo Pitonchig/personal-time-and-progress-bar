@@ -1,4 +1,4 @@
-package net.thumbtack.ptpb.db.project;
+package net.thumbtack.ptpb.db.user;
 
 
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,8 +16,8 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
-    @Id
+    //@Id
     private String id;
-    private String userId;
     private String projectName;
+    private List<Item> items;
 }

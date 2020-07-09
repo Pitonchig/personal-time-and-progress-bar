@@ -54,7 +54,7 @@ public class UserDaoTest {
     }
 
     @Test
-    void testGetAllSessions() {
+    void testGetAllUsers() {
         List<User> users = new LinkedList<>();
         for (int i = 0; i < 10; i++) {
             User user = User.builder()

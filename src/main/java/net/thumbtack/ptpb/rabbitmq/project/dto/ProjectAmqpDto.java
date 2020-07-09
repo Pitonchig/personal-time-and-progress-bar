@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.rabbitmq.project.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import java.util.List;
@@ -8,9 +9,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectDto {
+//@JsonSerialize
+public class ProjectAmqpDto {
     private String id;
     private String name;
     @Singular
-    List<ItemDto> items;
+    List<ItemAmqpDto> items;
 }

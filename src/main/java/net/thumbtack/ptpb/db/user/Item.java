@@ -1,4 +1,4 @@
-package net.thumbtack.ptpb.db.item;
+package net.thumbtack.ptpb.db.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,11 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item {
-    @Id
+    //@Id
     private String id;
-    private String projectId;
-    private String userId;
-
     private String content;
     private boolean isCompleted;
     private LocalDateTime start;
