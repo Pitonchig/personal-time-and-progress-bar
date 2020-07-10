@@ -1,10 +1,7 @@
 package net.thumbtack.ptpb.db.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -25,6 +22,7 @@ public class User {
     private String email;
     private LocalDateTime registration;
 
+    @Singular
     private List<Project> projects;
 
     private boolean isTodoistLinked;

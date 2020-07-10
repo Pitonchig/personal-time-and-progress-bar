@@ -7,6 +7,7 @@ import net.thumbtack.ptpb.common.PtpbException;
 import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.common.Types;
 import net.thumbtack.ptpb.handler.project.dto.request.UpdateProjectRequest;
+import net.thumbtack.ptpb.handler.project.dto.response.ProjectResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,12 @@ public class ProjectsController {
     private final ProjectsService projectsService;
 
     @GetMapping()
-    public List<? extends Response> getUserProjects(@CookieValue(value = Types.UUID, required = false) String cookie) throws PtpbException, JsonProcessingException {
+    public List<ProjectResponse> getUserProjects(@CookieValue(value = Types.UUID, required = false) String cookie) throws PtpbException, JsonProcessingException {
         return projectsService.getUserProjects(cookie);
     }
 
     @PutMapping()
-    public List<? extends Response> updateUserProjects(@RequestBody @Valid List<UpdateProjectRequest> request,
+    public List<ProjectResponse> updateUserProjects(@RequestBody @Valid List<UpdateProjectRequest> request,
                                                        @CookieValue(value = Types.UUID) String cookie) throws PtpbException {
         return projectsService.updateUserProjects(request, cookie);
     }

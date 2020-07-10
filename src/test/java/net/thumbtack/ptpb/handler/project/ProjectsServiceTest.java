@@ -1,40 +1,141 @@
 package net.thumbtack.ptpb.handler.project;
 
 import net.thumbtack.ptpb.db.session.Session;
+import net.thumbtack.ptpb.db.session.SessionDao;
+import net.thumbtack.ptpb.db.user.Item;
+import net.thumbtack.ptpb.db.user.Project;
+import net.thumbtack.ptpb.db.user.User;
+import net.thumbtack.ptpb.db.user.UserDao;
+import net.thumbtack.ptpb.handler.project.dto.ItemDto;
+import net.thumbtack.ptpb.handler.project.dto.request.UpdateProjectRequest;
+import net.thumbtack.ptpb.handler.project.dto.response.ProjectResponse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class ProjectsServiceTest {
+
     private ProjectsService projectsService;
-    private String uuid;
+    private String sessionUuid;
     private Session session;
 
-    /*
     @MockBean
     private SessionDao sessionDao;
     @MockBean
     private UserDao userDao;
-    @MockBean
-    private ProjectDao projectDao;
-    @MockBean
-    private ItemDao itemDao;
-
 
     @BeforeEach
     void setup() {
-        uuid = UUID.randomUUID().toString();
+        sessionUuid = UUID.randomUUID().toString();
         session = Session.builder()
-                .uuid(uuid)
-                .userId(System.nanoTime())
+                .uuid(sessionUuid)
+                .userId(UUID.randomUUID().toString())
                 .isExpired(false)
                 .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
-        projectsService = new ProjectsService(sessionDao, userDao, projectDao, itemDao);
-        when(sessionDao.getSessionByUuid(uuid)).thenReturn(Optional.of(session));
+        projectsService = new ProjectsService(sessionDao, userDao);
+        when(sessionDao.getSessionByUuid(sessionUuid)).thenReturn(Optional.of(session));
     }
 
 
+    @Test
+    void testGetUserProjects() throws Exception {
+        Project project1 = Project.builder()
+                .id(UUID.randomUUID().toString())
+                .projectName("project1")
+                .item(Item.builder().id(UUID.randomUUID().toString()).content("item1-1").build())
+                .item(Item.builder().id(UUID.randomUUID().toString()).content("item1-2").build())
+                .item(Item.builder().id(UUID.randomUUID().toString()).content("item1-3").build())
+                .build();
+
+        Project project2 = Project.builder()
+                .id(UUID.randomUUID().toString())
+                .projectName("project2")
+                .item(Item.builder().id(UUID.randomUUID().toString()).content("item2-1").build())
+                .item(Item.builder().id(UUID.randomUUID().toString()).content("item2-2").build())
+                .build();
+
+        User user = User.builder()
+                .id(session.getUserId())
+                .name("User")
+                .project(project1)
+                .project(project2)
+                .build();
+
+        when(userDao.getUserById(session.getUserId())).thenReturn(Optional.ofNullable(user));
+        List<ProjectResponse> responses = projectsService.getUserProjects(sessionUuid);
+
+        List<Project> projects = user.getProjects();
+        assertNotNull(projects);
+        assertEquals(projects.size(), responses.size());
+        for (ProjectResponse response : responses) {
+            Optional<Project> optional = projects.stream().filter(p -> response.getId().equals(p.getId())).findFirst();
+            assertTrue(optional.isPresent());
+            Project project = optional.get();
+
+            assertEquals(project.getProjectName(), response.getName());
+            List<String> responseItems = response.getItems().stream().map(ItemDto::getId).collect(Collectors.toList());
+            List<String> projectItems = project.getItems().stream().map(Item::getId).collect(Collectors.toList());
+            assertEquals(responseItems.size(), projectItems.size());
+            assertTrue(responseItems.containsAll(projectItems));
+        }
+    }
+
+    @Test
+    void testUpdateUserProjects() throws Exception {
+        User user = User.builder()
+                .id(session.getUserId())
+                .name("User")
+                .build();
+        when(userDao.getUserById(session.getUserId())).thenReturn(Optional.ofNullable(user));
+
+        UpdateProjectRequest request1 = UpdateProjectRequest.builder()
+                .id(UUID.randomUUID().toString())
+                .name("project1")
+                .item(ItemDto.builder().id(UUID.randomUUID().toString()).content("item1-1").build())
+                .item(ItemDto.builder().id(UUID.randomUUID().toString()).content("item1-2").build())
+                .build();
+
+        UpdateProjectRequest request2 = UpdateProjectRequest.builder()
+                .id(UUID.randomUUID().toString())
+                .name("project2")
+                .item(ItemDto.builder().id(UUID.randomUUID().toString()).content("item2-1").build())
+                .item(ItemDto.builder().id(UUID.randomUUID().toString()).content("item2-2").build())
+                .item(ItemDto.builder().id(UUID.randomUUID().toString()).content("item2-3").build())
+                .build();
+        List<UpdateProjectRequest> requests = Arrays.asList(request1, request2);
+
+        List<ProjectResponse> responses = projectsService.updateUserProjects(requests, sessionUuid);
+        assertNotNull(responses);
+        assertEquals(requests.size(), responses.size());
+        for (ProjectResponse response : responses) {
+            Optional<UpdateProjectRequest> optional = requests.stream().filter(p -> response.getId().equals(p.getId())).findFirst();
+            assertTrue(optional.isPresent());
+            UpdateProjectRequest project = optional.get();
+
+            assertEquals(project.getName(), response.getName());
+            List<String> responseItems = response.getItems().stream().map(ItemDto::getId).collect(Collectors.toList());
+            List<String> projectItems = project.getItems().stream().map(ItemDto::getId).collect(Collectors.toList());
+            assertEquals(responseItems.size(), projectItems.size());
+            assertTrue(responseItems.containsAll(projectItems));
+        }
+    }
+
+    /*
     @Test
     void testCreateProject() throws PtpbException {
         CreateProjectRequest request = CreateProjectRequest.builder()

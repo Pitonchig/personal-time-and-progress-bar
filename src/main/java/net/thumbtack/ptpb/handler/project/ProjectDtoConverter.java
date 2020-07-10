@@ -69,11 +69,14 @@ public class ProjectDtoConverter {
             List<Item> items = new LinkedList<>();
             projectRequest.getItems().forEach(i -> {
                 String itemUuid = (i.getId() == null || i.getId().isEmpty()) ? UUID.randomUUID().toString() : i.getId();
+                LocalDateTime start = (i.getStart() == null) ? null : i.getStart().toLocalDateTime();
+                LocalDateTime finish = (i.getStart() == null) ? null : i.getFinish().toLocalDateTime();
+
                 Item item = Item.builder()
                         .id(itemUuid)
                         .content(i.getContent())
-                        .start(i.getStart().toLocalDateTime())
-                        .finish(i.getFinish().toLocalDateTime())
+                        .start(start)
+                        .finish(finish)
                         .isCompleted(i.isCompleted())
                         .build();
                 items.add(item);

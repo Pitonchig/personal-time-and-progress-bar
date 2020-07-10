@@ -10,6 +10,7 @@ import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.common.PtpbException;
 import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.project.dto.request.UpdateProjectRequest;
+import net.thumbtack.ptpb.handler.project.dto.response.ProjectResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,16 +24,16 @@ public class ProjectsService {
     private final SessionDao sessionDao;
     private final UserDao userDao;
 
-    public List<? extends Response> getUserProjects(String cookie) throws PtpbException {
+    public List<ProjectResponse> getUserProjects(String cookie) throws PtpbException {
         log.info("get user projects request: cookie = {}", cookie);
         User user = getUserBySessionUuid(cookie);
 
-        List<? extends Response> responses = ProjectDtoConverter.toProjectResponseList(user.getProjects());
+        List<ProjectResponse> responses = ProjectDtoConverter.toProjectResponseList(user.getProjects());
         log.info("get user projects response: projects = {}", responses);
         return responses;
     }
 
-    public List<? extends Response> updateUserProjects(List<UpdateProjectRequest> request, String cookie) throws PtpbException {
+    public List<ProjectResponse> updateUserProjects(List<UpdateProjectRequest> request, String cookie) throws PtpbException {
         log.info("update user projects request: cookie={}, projects = {}", cookie, request);
         User user = getUserBySessionUuid(cookie);
 
@@ -40,7 +41,7 @@ public class ProjectsService {
         user.setProjects(projects);
         userDao.insertUser(user);
 
-        List<? extends Response> responses = ProjectDtoConverter.toProjectResponseList(user.getProjects());
+        List<ProjectResponse> responses = ProjectDtoConverter.toProjectResponseList(user.getProjects());
         log.info("update user projects response: projects = {}", responses);
         return responses;
     }
