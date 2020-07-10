@@ -29,11 +29,13 @@ public class UserDao {
 
 
     public Optional<User> getUserByNameAndPassword(String name, String password) throws PtpbException {
-        List<User> users = userMapper.findByNameAndPassword(name, password);
+        //List<User> users = userMapper.findByNameAndPassword(name, password);  //TODO: try to use this method
+        List<User> users = userMapper.findByName(name);
         if (users.size() > 1) {
             throw new PtpbException(ErrorCode.UNKNOWN_ERROR);
         }
-        return users.isEmpty() ? Optional.empty() : Optional.ofNullable(users.get(0));
+        boolean isPasswordValid = !users.isEmpty() && users.get(0).getPassword().equals(password); //TODO: remove when findByNameAndPassword method will be used
+        return users.isEmpty() || !isPasswordValid ? Optional.empty() : Optional.ofNullable(users.get(0));
     }
 
     public List<User> getAllUsers() {

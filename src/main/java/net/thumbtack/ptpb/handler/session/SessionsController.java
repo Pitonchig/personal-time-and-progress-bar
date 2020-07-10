@@ -28,6 +28,7 @@ public class SessionsController {
 
     @PostMapping
     public Response loginUser(@RequestBody @Valid LoginUserRequest request, HttpServletResponse httpServletResponse) throws PtpbException {
+        log.info("[POST] loginUser: request={}", request);
         String uuid = UUID.randomUUID().toString();
         httpServletResponse.addCookie(new Cookie(Types.UUID, uuid));
         return sessionsService.loginUser(request, uuid);
@@ -35,6 +36,7 @@ public class SessionsController {
 
     @DeleteMapping()
     public Response logoutUser(@CookieValue(value = Types.UUID) String cookie) throws PtpbException {
+        log.info("[DELETE] logoutUser: cookie={}", cookie);
         return sessionsService.logoutUser(cookie);
     }
 }

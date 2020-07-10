@@ -128,4 +128,38 @@ public class SessionDaoTest {
         sessionDao.deleteAllSessions();
         assertEquals(0, sessionDao.getAllSessions().size());
     }
+
+    @Test
+    void testUpdateSession() {
+        String uuid = UUID.randomUUID().toString();
+        Session session1 = Session.builder()
+                .uuid(uuid)
+                .userId(UUID.randomUUID().toString())
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .isExpired(false)
+                .build();
+        sessionDao.insert(session1);
+
+        Optional<Session> result1 = sessionDao.getSessionByUuid(uuid);
+        assertTrue(result1.isPresent());
+        Session resultSession1 = result1.get();
+        assertFalse(resultSession1.isExpired());
+
+        Session session2 = Session.builder()
+                .uuid(uuid)
+                .userId(resultSession1.getUserId())
+                .dateTime(resultSession1.getDateTime())
+                .isExpired(true)
+                .build();
+        sessionDao.update(session2);
+
+        Optional<Session> result2 = sessionDao.getSessionByUuid(uuid);
+        assertTrue(result2.isPresent());
+        Session resultSession2 = result2.get();
+
+        assertEquals(uuid, resultSession2.getUuid());
+        assertEquals(session1.getUserId(), resultSession2.getUserId());
+        assertEquals(session1.getDateTime(), resultSession2.getDateTime());
+        assertTrue(resultSession2.isExpired());
+    }
 }
