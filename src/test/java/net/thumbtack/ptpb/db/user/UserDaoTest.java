@@ -1,14 +1,12 @@
 package net.thumbtack.ptpb.db.user;
 
 import net.thumbtack.ptpb.common.PtpbException;
-import net.thumbtack.ptpb.db.DbConfiguration;
-import net.thumbtack.ptpb.db.DbProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,12 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
-//@EnableConfigurationProperties
-//@ContextConfiguration(classes = {
-//        DbConfiguration.class,
-//        DbProperties.class,
-//        UserDaoImpl.class
-//})
 public class UserDaoTest {
 
     @Autowired
@@ -35,6 +27,22 @@ public class UserDaoTest {
     @BeforeEach
     void setup() {
         userDao.deleteAllUsers();
+    }
+
+    @Test
+    void testInsertAndGetUserById() throws PtpbException {
+        String uuid = UUID.randomUUID().toString();
+        User user = User.builder()
+                .id(uuid)
+                .name("userName")
+                .password("password")
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
+        userDao.insertUser(user);
+
+        Optional<User> result = userDao.getUserById(uuid);
+        assertTrue(result.isPresent());
+        assertEquals(result.get(), user);
     }
 
     @Test
@@ -129,6 +137,39 @@ public class UserDaoTest {
         assertEquals(count, userDao.getAllUsers().size());
         userDao.deleteAllUsers();
         assertEquals(0, userDao.getAllUsers().size());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Peter, peterpass, Peter, peterpass, true",
+            "Peter, peterpass, Peter1, peterpass, false",
+            "Peter, peterpass, Pete, peterpass, false",
+            "Peter, peterpass, Peter, peterpass1, false",
+            "Peter, peterpass, Peter, peterpas, false",
+            "Peter, peterpass, peterpass, Peter, false",
+            "Peter, peterpass, peter, peterpass, false",
+            "Peter, peterpass, Peter, peTerpass, false",
+            "Peter, peterpass, Peter,  , false"
+    })
+    void testInsertAndGetUserByNameAndPassword(String registrationLogin, String registrationPassword,
+                                               String login, String password, boolean expected) throws PtpbException {
+        User user = User.builder()
+                .id(UUID.randomUUID().toString())
+                .name(registrationLogin)
+                .password(registrationPassword)
+                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
+        userDao.insertUser(user);
+
+        Optional<User> result = userDao.getUserByNameAndPassword(login, password);
+        assertEquals(expected, result.isPresent());
+
+        if (expected && result.isPresent()) {
+            User resultUser = result.get();
+            assertEquals(user.getId(), resultUser.getId());
+            assertEquals(user.getName(), resultUser.getName());
+            assertEquals(user.getPassword(), resultUser.getPassword());
+        }
     }
 
 }

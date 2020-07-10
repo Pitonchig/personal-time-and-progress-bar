@@ -52,7 +52,7 @@ public class SessionsServiceTest {
                 .password(request.getPassword())
                 .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
-        when(userDao.getUserByName(request.getLogin())).thenReturn(Optional.of(user));
+        when(userDao.getUserByNameAndPassword(request.getLogin(), request.getPassword())).thenReturn(Optional.of(user));
         LoginUserResponse response = sessionsService.loginUser(request, uuid);
         assertNotNull(response);
         assertEquals(user.getId(), response.getId());

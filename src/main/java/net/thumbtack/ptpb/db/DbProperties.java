@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @NoArgsConstructor
-@AllArgsConstructor
 @ConfigurationProperties("db")
 public class DbProperties {
     private String host;
