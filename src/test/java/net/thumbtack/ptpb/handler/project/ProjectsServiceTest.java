@@ -100,6 +100,7 @@ public class ProjectsServiceTest {
         User user = User.builder()
                 .id(session.getUserId())
                 .name("User")
+                .isTodoistLinked(true)
                 .build();
         when(userDao.getUserById(session.getUserId())).thenReturn(Optional.ofNullable(user));
 

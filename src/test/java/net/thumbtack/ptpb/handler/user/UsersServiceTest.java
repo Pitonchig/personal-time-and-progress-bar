@@ -55,7 +55,6 @@ public class UsersServiceTest {
         User user = userArgumentCaptor.getValue();
         assertNotNull(user);
 
-
         assertEquals(request.getLogin(), user.getName());
         assertEquals(request.getPassword(), user.getPassword());
         assertEquals(request.getEmail(), user.getEmail());
