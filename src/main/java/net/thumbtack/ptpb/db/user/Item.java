@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 
 @Data
@@ -18,6 +18,9 @@ public class Item {
     private String id;
     private String content;
     private boolean isCompleted;
-    private LocalDateTime start;
-    private LocalDateTime finish;
+    private boolean isDeleted;
+    private ZonedDateTime start;
+    private ZonedDateTime finish;
+    private ZonedDateTime completion;
+
 }

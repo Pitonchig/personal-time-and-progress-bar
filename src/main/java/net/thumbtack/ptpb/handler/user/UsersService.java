@@ -11,10 +11,9 @@ import net.thumbtack.ptpb.common.PtpbException;
 import net.thumbtack.ptpb.handler.user.dto.requests.DeleteUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.requests.RegisterUserRequest;
 import net.thumbtack.ptpb.handler.user.dto.responses.RegisterUserResponse;
-import net.thumbtack.ptpb.rabbitmq.user.RabbitMqUserService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,14 +35,14 @@ public class UsersService {
                 .name(request.getLogin())
                 .password(request.getPassword())
                 .email(request.getEmail())
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
 
         Session session = Session.builder()
                 .userId(user.getId())
                 .uuid(uuid)
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         sessionDao.insert(session);
 

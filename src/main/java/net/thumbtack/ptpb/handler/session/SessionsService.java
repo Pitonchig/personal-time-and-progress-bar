@@ -13,7 +13,7 @@ import net.thumbtack.ptpb.handler.session.dto.requests.LoginUserRequest;
 import net.thumbtack.ptpb.handler.session.dto.responses.LoginUserResponse;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public class SessionsService {
         Session session = Session.builder()
                 .userId(user.getId())
                 .uuid(uuid)
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         sessionDao.insert(session);
 

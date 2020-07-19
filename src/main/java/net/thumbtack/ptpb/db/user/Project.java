@@ -14,6 +14,7 @@ import java.util.List;
 public class Project {
     private String id;
     private String projectName;
+    private boolean isDeleted;
     @Singular
     private List<Item> items;
 }

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private LocalDateTime registration;
+    private ZonedDateTime registration;
 
     @Singular
     private List<Project> projects;

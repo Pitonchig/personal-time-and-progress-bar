@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonSerialize
+@JsonSerialize
 public class SyncProjectsAmqpRequest {
     private String userId;
     private boolean toTodoist;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class UserDaoTest {
                 .id(uuid)
                 .name("userName")
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
 
@@ -52,7 +53,7 @@ public class UserDaoTest {
                 .id(UUID.randomUUID().toString())
                 .name(userName)
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
 
@@ -69,7 +70,7 @@ public class UserDaoTest {
                     .id(UUID.randomUUID().toString())
                     .name(String.format("User-%d", i))
                     .password(String.format("password-%d", i))
-                    .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .build();
             users.add(user);
         }
@@ -79,7 +80,7 @@ public class UserDaoTest {
                 .id(UUID.randomUUID().toString())
                 .name("NotInsertedUser")
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         List<User> results = userDao.getAllUsers();
 
@@ -96,7 +97,7 @@ public class UserDaoTest {
                 .id(UUID.randomUUID().toString())
                 .name("User")
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
 
         assertFalse(userDao.isRegistered(user.getName()));
@@ -111,7 +112,7 @@ public class UserDaoTest {
                 .id(id)
                 .name("User")
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
         assertTrue(userDao.isRegistered(user.getName()));
@@ -130,7 +131,7 @@ public class UserDaoTest {
                     .id(UUID.randomUUID().toString())
                     .name(String.format("User-%d", i))
                     .password("password")
-                    .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .build();
             userDao.insertUser(user);
         }
@@ -157,7 +158,7 @@ public class UserDaoTest {
                 .id(UUID.randomUUID().toString())
                 .name(registrationLogin)
                 .password(registrationPassword)
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
 

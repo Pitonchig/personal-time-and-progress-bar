@@ -20,6 +20,10 @@ public class ItemDto {
     private ZonedDateTime start;
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private ZonedDateTime finish;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    private ZonedDateTime completion;
     @JsonProperty("isCompleted")
     private boolean isCompleted;
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
 }

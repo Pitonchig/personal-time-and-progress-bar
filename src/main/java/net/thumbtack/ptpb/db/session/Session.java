@@ -7,18 +7,17 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Session implements Serializable {
+public class Session {
     @Id
     private String uuid;
     private String userId;
-    private LocalDateTime dateTime;
+    private ZonedDateTime dateTime;
     private boolean isExpired;
 }

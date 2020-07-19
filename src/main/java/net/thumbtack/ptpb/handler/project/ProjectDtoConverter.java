@@ -20,15 +20,18 @@ public class ProjectDtoConverter {
         if (item == null) {
             return null;
         }
-        ZonedDateTime start = item.getStart() != null ? ZonedDateTime.of(item.getStart().toLocalDate(), item.getStart().toLocalTime(), ZoneId.of("UTC")) : null;
-        ZonedDateTime finish = item.getFinish() != null ? ZonedDateTime.of(item.getFinish().toLocalDate(), item.getFinish().toLocalTime(), ZoneId.of("UTC")) : null;
+//        ZonedDateTime start = localDateTimeToZonedDateTime(item.getStart());
+//        ZonedDateTime finish = localDateTimeToZonedDateTime(item.getFinish());
+//        ZonedDateTime completion = localDateTimeToZonedDateTime(item.getCompletion());
 
         return ItemDto.builder()
                 .id(item.getId())
                 .isCompleted(item.isCompleted())
                 .content(item.getContent())
-                .start(start)
-                .finish(finish)
+                .start(item.getStart())
+                .finish(item.getFinish())
+                .isDeleted(item.isDeleted())
+                .completion(item.getCompletion())
                 .build();
     }
 
@@ -46,6 +49,7 @@ public class ProjectDtoConverter {
                 .id(project.getId())
                 .name(project.getProjectName())
                 .items(toItemDtoList(items))
+                .isDeleted(project.isDeleted())
                 .build();
     }
 
@@ -69,15 +73,18 @@ public class ProjectDtoConverter {
             List<Item> items = new LinkedList<>();
             projectRequest.getItems().forEach(i -> {
                 String itemUuid = (i.getId() == null || i.getId().isEmpty()) ? UUID.randomUUID().toString() : i.getId();
-                LocalDateTime start = (i.getStart() == null) ? null : i.getStart().toLocalDateTime();
-                LocalDateTime finish = (i.getStart() == null) ? null : i.getFinish().toLocalDateTime();
+//                LocalDateTime start = zonedDateTimeToLocalDateTime(i.getStart());
+//                LocalDateTime finish = zonedDateTimeToLocalDateTime(i.getFinish());
+//                LocalDateTime completion = zonedDateTimeToLocalDateTime(i.getCompletion());
 
                 Item item = Item.builder()
                         .id(itemUuid)
                         .content(i.getContent())
-                        .start(start)
-                        .finish(finish)
+                        .start(i.getStart())
+                        .finish(i.getFinish())
+                        .completion(i.getCompletion())
                         .isCompleted(i.isCompleted())
+                        .isDeleted(i.isDeleted())
                         .build();
                 items.add(item);
             });
@@ -87,10 +94,18 @@ public class ProjectDtoConverter {
                     .id(projectUuid)
                     .projectName(projectRequest.getName())
                     .items(items)
+                    .isDeleted(projectRequest.isDeleted())
                     .build();
             projects.add(project);
         }
         return projects;
     }
 
+    static private ZonedDateTime localDateTimeToZonedDateTime(LocalDateTime localDateTime) {
+        return (localDateTime == null) ? null : ZonedDateTime.of(localDateTime.toLocalDate(), localDateTime.toLocalTime(), ZoneId.of("UTC"));
+    }
+
+    static private LocalDateTime zonedDateTimeToLocalDateTime(ZonedDateTime zonedDateTime) {
+        return (zonedDateTime == null) ? null : zonedDateTime.toLocalDateTime();
+    }
 }

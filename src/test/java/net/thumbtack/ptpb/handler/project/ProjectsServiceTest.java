@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ProjectsServiceTest {
                 .uuid(sessionUuid)
                 .userId(UUID.randomUUID().toString())
                 .isExpired(false)
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         projectsService = new ProjectsService(sessionDao, userDao);
         when(sessionDao.getSessionByUuid(sessionUuid)).thenReturn(Optional.of(session));

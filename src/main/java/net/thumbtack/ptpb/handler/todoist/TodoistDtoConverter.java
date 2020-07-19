@@ -30,6 +30,7 @@ public class TodoistDtoConverter {
         ProjectAmqpDto projectDto = ProjectAmqpDto.builder()
                 .id(project.getId())
                 .name(project.getProjectName())
+                .isDeleted(project.isDeleted())
                 .items(itemDtoList)
                 .build();
         return projectDto;
@@ -56,8 +57,10 @@ public class TodoistDtoConverter {
                 .id(item.getId())
                 .content(item.getContent())
                 .isCompleted(item.isCompleted())
+                .isDeleted(item.isDeleted())
                 .start(item.getStart())
                 .finish(item.getFinish())
+                .completion(item.getCompletion())
                 .build();
     }
 
@@ -82,6 +85,7 @@ public class TodoistDtoConverter {
                 .id(projectAmqpDto.getId())
                 .projectName(projectAmqpDto.getName())
                 .items(fromItemAmqpDto(projectAmqpDto.getItems()))
+                .isDeleted(projectAmqpDto.isDeleted())
                 .build();
     }
 
@@ -107,8 +111,9 @@ public class TodoistDtoConverter {
                 .isCompleted(amqpDtoItem.isCompleted())
                 .start(amqpDtoItem.getStart())
                 .finish(amqpDtoItem.getFinish())
+                .completion(amqpDtoItem.getCompletion())
                 .content(amqpDtoItem.getContent())
+                .isDeleted(amqpDtoItem.isDeleted())
                 .build();
     }
-
 }

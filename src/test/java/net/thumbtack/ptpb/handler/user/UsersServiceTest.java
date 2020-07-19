@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
@@ -95,7 +96,7 @@ public class UsersServiceTest {
                 .id(id)
                 .name(request.getLogin())
                 .password(request.getPassword())
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));
         when(sessionDao.isOnline(uuid)).thenReturn(true);
@@ -137,7 +138,7 @@ public class UsersServiceTest {
                 .id(id)
                 .name("wrong login")
                 .password("wrong password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserById(id)).thenReturn(Optional.of(user));
         when(sessionDao.isOnline(uuid)).thenReturn(true);

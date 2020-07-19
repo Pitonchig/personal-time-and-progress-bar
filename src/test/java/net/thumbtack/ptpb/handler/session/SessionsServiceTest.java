@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,7 +51,7 @@ public class SessionsServiceTest {
                 .id(UUID.randomUUID().toString())
                 .name(request.getLogin())
                 .password(request.getPassword())
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         when(userDao.getUserByNameAndPassword(request.getLogin(), request.getPassword())).thenReturn(Optional.of(user));
         LoginUserResponse response = sessionsService.loginUser(request, uuid);
@@ -74,7 +75,7 @@ public class SessionsServiceTest {
         Session session = Session.builder()
                 .uuid(uuid)
                 .userId(UUID.randomUUID().toString())
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();
         when(sessionDao.getSessionByUuid(uuid)).thenReturn(Optional.of(session));

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,14 +50,14 @@ public class SessionDaoTest {
                 .id(UUID.randomUUID().toString())
                 .name("userName")
                 .password("password")
-                .registration(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .registration(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         userDao.insertUser(user);
 
         Session session = Session.builder()
                 .uuid(uuid)
                 .userId(user.getId())
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();
         sessionDao.insert(session);
@@ -73,7 +74,7 @@ public class SessionDaoTest {
             Session session = Session.builder()
                     .uuid(UUID.randomUUID().toString())
                     .userId(UUID.randomUUID().toString())
-                    .dateTime(LocalDateTime.now())
+                    .dateTime(ZonedDateTime.now())
                     .isExpired(false)
                     .build();
             sessions.add(session);
@@ -83,7 +84,7 @@ public class SessionDaoTest {
         Session notInsertedSession = Session.builder()
                 .uuid(UUID.randomUUID().toString())
                 .userId(UUID.randomUUID().toString())
-                .dateTime(LocalDateTime.now())
+                .dateTime(ZonedDateTime.now())
                 .isExpired(false)
                 .build();
         List<Session> results = sessionDao.getAllSessions();
@@ -103,7 +104,7 @@ public class SessionDaoTest {
         Session session = Session.builder()
                 .uuid(uuid)
                 .userId(UUID.randomUUID().toString())
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();
         sessionDao.insert(session);
@@ -119,7 +120,7 @@ public class SessionDaoTest {
             Session session = Session.builder()
                     .uuid(UUID.randomUUID().toString())
                     .userId(UUID.randomUUID().toString())
-                    .dateTime(LocalDateTime.now())
+                    .dateTime(ZonedDateTime.now())
                     .isExpired(false)
                     .build();
             sessionDao.insert(session);
@@ -135,7 +136,7 @@ public class SessionDaoTest {
         Session session1 = Session.builder()
                 .uuid(uuid)
                 .userId(UUID.randomUUID().toString())
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .dateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .isExpired(false)
                 .build();
         sessionDao.insert(session1);

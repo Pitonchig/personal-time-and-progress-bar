@@ -1,5 +1,6 @@
 package net.thumbtack.ptpb.handler.project.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import net.thumbtack.ptpb.handler.project.dto.ItemDto;
 
@@ -16,4 +17,6 @@ public class UpdateProjectRequest {
     private String name;
     @Singular
     List<ItemDto> items;
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
 }

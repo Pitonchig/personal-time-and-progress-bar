@@ -8,7 +8,6 @@ import net.thumbtack.ptpb.db.user.Project;
 import net.thumbtack.ptpb.db.user.User;
 import net.thumbtack.ptpb.db.user.UserDao;
 import net.thumbtack.ptpb.common.PtpbException;
-import net.thumbtack.ptpb.handler.common.Response;
 import net.thumbtack.ptpb.handler.project.dto.request.UpdateProjectRequest;
 import net.thumbtack.ptpb.handler.project.dto.response.ProjectResponse;
 import org.springframework.stereotype.Service;
