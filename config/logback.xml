@@ -23,7 +23,7 @@
         </rollingPolicy>
     </appender>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="RollingFileAppender"/>
         <appender-ref ref="ConsoleAppender"/>
     </root>

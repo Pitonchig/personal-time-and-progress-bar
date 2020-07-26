@@ -51,29 +51,4 @@ public class RabbitMqUserService {
         return objectMapper.readValue(responseWrapper.getData(), SyncUserTokenAmqpResponse.class);
 
     }
-
-
-//    public SyncUserTokenAmqpResponse syncUser(SyncUserTokenAmqpRequest request) throws JsonProcessingException, PtpbException {
-//        log.info("syncUSer: request = {}", request);
-//        MessageProperties properties = MessagePropertiesBuilder.newInstance()
-//                .setContentType("application/json")
-//                .setHeader("type", SyncUserTokenAmqpRequest.class.getSimpleName())
-//                .build();
-//
-//        Message message = MessageBuilder.withBody(objectMapper.writeValueAsString(request).getBytes())
-//                .andProperties(properties)
-//                .build();
-//
-//        Message response = template.sendAndReceive(wrapperQueueName, message);
-//        if (response == null) {
-//            throw new PtpbException(WRAPPER_TIMEOUT);
-//        }
-//        log.info("syncUSer: response = {}", response);
-//
-//        ResponseWrapper responseWrapper = objectMapper.readValue(new String(response.getBody()), ResponseWrapper.class);
-//        if(!responseWrapper.isOk()) {
-//            throw new PtpbException(WRAPPER_ERROR);
-//        }
-//        return objectMapper.readValue(responseWrapper.getData(), SyncUserTokenAmqpResponse.class);
-//    }
 }
